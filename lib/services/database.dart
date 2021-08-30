@@ -31,6 +31,17 @@ class DatabaseService {
         "state": data.state,
       },
       "order": <OrderData>[],
+      "orderHistory": <OrderData>[],
+    });
+  }
+
+  Future updateUserOrders(OrderData data) async {
+    return await userCollectionReference.doc(uid).update({
+      "order": {
+        "item": data.food.foodId,
+        "qty": data.qty,
+        "time": data.time,
+      }
     });
   }
 

@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dinner_planner/models/food.dart';
 
 class OrderData {
-  final DocumentReference item;
-  final int qty;
-  final Timestamp time;
+  final Food food;
+  int qty;
+  final Timestamp? time;
 
-  OrderData({required this.item, required this.qty, required this.time});
+  OrderData({required this.food, required this.qty, this.time});
 }
