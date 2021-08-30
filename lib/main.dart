@@ -16,7 +16,8 @@ import 'package:provider/single_child_widget.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider(
+      create: (context) => OrderListProvider(), child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -35,10 +36,7 @@ class MyApp extends StatelessWidget {
         "/": (context) => MultiProvider(providers: <SingleChildWidget>[
               StreamProvider<UserID?>.value(
                   value: AuthenticationService().user, initialData: null),
-              ChangeNotifierProvider(create: (context) => OrderListProvider()),
             ], child: Home()),
-        // "/home": (context) => ChangeNotifierProvider<OrderListProvider>(
-        //     create: (context) => OrderListProvider(), child: Home()),
         "/auth": (context) => Auth(),
         "/item": (context) => ItemDetail(),
         "/settings": (context) => const Setting(),

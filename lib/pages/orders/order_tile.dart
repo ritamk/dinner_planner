@@ -96,15 +96,12 @@ class _OrderTileStatefulWidgetState extends State<OrderTileStatefulWidget> {
           Consumer<OrderListProvider>(builder: (context, provider, child) {
         return Row(
           mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Column(
               mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Row(
                   mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     IconButton(
                         onPressed: () =>
@@ -124,8 +121,7 @@ class _OrderTileStatefulWidgetState extends State<OrderTileStatefulWidget> {
               ],
             ),
             IconButton(
-                onPressed: () => provider
-                    .removeOrder(OrderData(food: widget.orderData, qty: 1)),
+                onPressed: () => provider.removeOrder(widget.orderData),
                 icon: Icon(Icons.delete))
           ],
         );

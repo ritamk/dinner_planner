@@ -1,8 +1,6 @@
 import 'package:dinner_planner/models/user.dart';
 import 'package:dinner_planner/pages/orders/order_tile.dart';
-import 'package:dinner_planner/services/database.dart';
 import 'package:dinner_planner/services/order_list.dart';
-import 'package:dinner_planner/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,10 +13,11 @@ class Orders extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        shape: appBarShapeBorder(),
+        backgroundColor: Colors.white10,
+        elevation: 0.0,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: Icon(Icons.arrow_back_ios),
+          icon: Icon(Icons.arrow_back_ios, color: Colors.blue),
         ),
       ),
       body: Center(
