@@ -7,10 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class FoodListTile extends StatelessWidget {
-  FoodListTile({Key? key, required this.food, required this.loggedIn})
+  FoodListTile(
+      {Key? key, required this.food, required this.loggedIn, required this.uid})
       : super(key: key);
   final bool loggedIn;
   final Food food;
+  final String? uid;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,7 @@ class FoodListTile extends StatelessWidget {
         vegColor: vegColor,
         food: food,
         loggedIn: loggedIn,
+        uid: uid,
       ),
     );
   }
@@ -32,11 +35,13 @@ class ListTileStatefulWidget extends StatefulWidget {
       {Key? key,
       required this.loggedIn,
       required this.vegColor,
-      required this.food})
+      required this.food,
+      required this.uid})
       : super(key: key);
   final bool loggedIn;
   final Color vegColor;
   final Food food;
+  final String? uid;
 
   @override
   _ListTileStatefulWidgetState createState() => _ListTileStatefulWidgetState();
@@ -89,32 +94,29 @@ class _ListTileStatefulWidgetState extends State<ListTileStatefulWidget> {
               fontWeight: FontWeight.bold, color: Colors.teal.shade900)),
       subtitle: Text("₹ ${widget.food.price.toString()}",
           style: TextStyle(fontWeight: FontWeight.bold)),
-      trailing: ChangeNotifierProvider<OrderListProvider>(
-        create: (_) => OrderListProvider(),
-        child: Consumer<OrderListProvider>(
-          builder: (context, provider, child) {
-            return IconButton(
-              icon: added ? Icon(Icons.close) : Icon(Icons.add),
-              onPressed: () {
-                setState(() {
-                  if (widget.loggedIn) {
-                    added = !added;
-                    added
-                        ? provider
-                            .addOrder(OrderData(food: widget.food, qty: 1))
-                        : provider
-                            .removeOrder(OrderData(food: widget.food, qty: 1));
+      trailing: Consumer<OrderListProvider>(
+        builder: (context, provider, child) {
+          return IconButton(
+            icon: added ? Icon(Icons.close) : Icon(Icons.add),
+            onPressed: () {
+              setState(() {
+                if (widget.loggedIn) {
+                  added = !added;
+                  if (added) {
+                    provider.addOrder(OrderData(food: widget.food, qty: 1));
                   } else {
-                    showCupertinoDialog<Widget>(
-                        context: context,
-                        builder: (builder) => DialogToLogin(),
-                        barrierDismissible: true);
+                    provider.removeOrder(OrderData(food: widget.food, qty: 1));
                   }
-                });
-              },
-            );
-          },
-        ),
+                } else {
+                  showCupertinoDialog<Widget>(
+                      context: context,
+                      builder: (builder) => DialogToLogin(),
+                      barrierDismissible: true);
+                }
+              });
+            },
+          );
+        },
       ),
       onTap: () {
         Navigator.pushNamed(context, "/item");
@@ -122,24 +124,3 @@ class _ListTileStatefulWidgetState extends State<ListTileStatefulWidget> {
     );
   }
 }
-
-// IconButton(
-//             icon: added ? Icon(Icons.close) : Icon(Icons.add),
-//             onPressed: () {
-//               setState(() {
-//                 if (widget.loggedIn) {
-//                   added = !added;
-//                   added
-//                       ? widget.order
-//                           .add(OrderData(item: widget.food.foodId, qty: 1))
-//                       : widget.order
-//                           .remove(OrderData(item: widget.food.foodId, qty: 1));
-//                 } else {
-//                   showCupertinoDialog<Widget>(
-//                       context: context,
-//                       builder: (builder) => DialogToLogin(),
-//                       barrierDismissible: true);
-//                 }
-//               });
-//             },
-//           ),

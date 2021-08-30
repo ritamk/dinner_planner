@@ -37,11 +37,57 @@ class DatabaseService {
 
   Future updateUserOrders(OrderData data) async {
     return await userCollectionReference.doc(uid).update({
-      "order": {
-        "item": data.food.foodId,
-        "qty": data.qty,
-        "time": data.time,
-      }
+      "order": FieldValue.arrayUnion([
+        {
+          "name": data.food.name,
+          "price": data.food.price,
+          "item": menuCollectionReference.doc(data.food.foodId),
+          "qty": data.qty,
+          "time": Timestamp.now(),
+        }
+      ])
+    });
+  }
+
+  Future removeUserOrders(OrderData data) async {
+    return await userCollectionReference.doc(uid).update({
+      "order": FieldValue.arrayRemove([
+        {
+          "name": data.food.name,
+          "price": data.food.price,
+          "item": menuCollectionReference.doc(data.food.foodId),
+          "qty": data.qty,
+          "time": Timestamp.now(),
+        }
+      ])
+    });
+  }
+
+  Future updateUserOrderHistory(OrderData data) async {
+    return await userCollectionReference.doc(uid).update({
+      "orderHistory": FieldValue.arrayUnion([
+        {
+          "name": data.food.name,
+          "price": data.food.price,
+          "item": menuCollectionReference.doc(data.food.foodId),
+          "qty": data.qty,
+          "time": Timestamp.now(),
+        }
+      ])
+    });
+  }
+
+  Future removeUserOrderHistory(OrderData data) async {
+    return await userCollectionReference.doc(uid).update({
+      "orderHistory": FieldValue.arrayRemove([
+        {
+          "name": data.food.name,
+          "price": data.food.price,
+          "item": menuCollectionReference.doc(data.food.foodId),
+          "qty": data.qty,
+          "time": Timestamp.now()
+        }
+      ])
     });
   }
 

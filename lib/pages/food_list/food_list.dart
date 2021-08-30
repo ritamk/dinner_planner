@@ -13,7 +13,7 @@ class FoodList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final UserID? userID = Provider.of<UserID?>(context);
-    final food = Provider.of<List<Food>>(context);
+    final List<Food> food = Provider.of<List<Food>>(context);
     final bool loggedIn = userID != null ? true : false;
 
     return food.isEmpty
@@ -23,15 +23,19 @@ class FoodList extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               switch (filter) {
                 case "All":
-                  return FoodListTile(food: food[index], loggedIn: loggedIn);
+                  return FoodListTile(
+                      food: food[index], loggedIn: loggedIn, uid: userID?.uid);
                 case "Starters":
-                  return filterFood("starter", food[index], loggedIn);
+                  return filterFood(
+                      "starter", food[index], loggedIn, userID?.uid);
                 case "Soups":
-                  return filterFood("soup", food[index], loggedIn);
+                  return filterFood("soup", food[index], loggedIn, userID?.uid);
                 case "Salads":
-                  return filterFood("salad", food[index], loggedIn);
+                  return filterFood(
+                      "salad", food[index], loggedIn, userID?.uid);
                 default:
-                  return FoodListTile(food: food[index], loggedIn: loggedIn);
+                  return FoodListTile(
+                      food: food[index], loggedIn: loggedIn, uid: userID?.uid);
               }
             },
             scrollDirection: Axis.vertical,
@@ -39,9 +43,9 @@ class FoodList extends StatelessWidget {
           );
   }
 
-  Widget filterFood(String type, Food food, bool loggedIn) {
+  Widget filterFood(String type, Food food, bool loggedIn, String? uid) {
     return type == food.type
-        ? FoodListTile(food: food, loggedIn: loggedIn)
+        ? FoodListTile(food: food, loggedIn: loggedIn, uid: uid)
         : const Padding(padding: EdgeInsets.all(0.0));
   }
 }

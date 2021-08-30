@@ -50,57 +50,60 @@ class OrderTileStatefulWidget extends StatefulWidget {
 class _OrderTileStatefulWidgetState extends State<OrderTileStatefulWidget> {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => OrderListProvider(),
-      builder: (context, child) => Consumer<OrderListProvider>(
-        builder: (context, provider, child) {
-          return ListTile(
-            contentPadding: const EdgeInsets.all(15.0),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(25.0)),
-            tileColor: Colors.white,
-            leading: Stack(
+    return ListTile(
+      contentPadding: const EdgeInsets.all(15.0),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
+      tileColor: Colors.white,
+      leading: Stack(
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15.0),
+              color: Colors.black26,
+            ),
+            constraints: BoxConstraints.tight(Size(80.0, 120.0)),
+          ),
+          Container(
+            constraints: BoxConstraints.tight(Size.square(18.0)),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+            ),
+            child: Stack(
+              alignment: AlignmentDirectional.center,
               children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.0),
-                    color: Colors.black26,
-                  ),
-                  constraints: BoxConstraints.tight(Size(80.0, 120.0)),
+                Icon(
+                  Icons.circle_outlined,
+                  color: widget.vegColor,
+                  size: 16.0,
                 ),
-                Container(
-                  constraints: BoxConstraints.tight(Size.square(18.0)),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
-                  ),
-                  child: Stack(
-                    alignment: AlignmentDirectional.center,
-                    children: <Widget>[
-                      Icon(
-                        Icons.circle_outlined,
-                        color: widget.vegColor,
-                        size: 16.0,
-                      ),
-                      Icon(
-                        Icons.circle_rounded,
-                        color: widget.vegColor,
-                        size: 8.0,
-                      ),
-                    ],
-                  ),
+                Icon(
+                  Icons.circle_rounded,
+                  color: widget.vegColor,
+                  size: 8.0,
                 ),
               ],
             ),
-            title: Text(widget.orderData.food.name,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, color: Colors.teal.shade900)),
-            subtitle: Text("₹ ${widget.orderData.food.price.toString()}",
-                style: TextStyle(fontWeight: FontWeight.bold)),
-            trailing: Column(
+          ),
+        ],
+      ),
+      title: Text(widget.orderData.food.name,
+          style: TextStyle(
+              fontWeight: FontWeight.bold, color: Colors.teal.shade900)),
+      subtitle: Text("₹ ${widget.orderData.food.price.toString()}",
+          style: TextStyle(fontWeight: FontWeight.bold)),
+      trailing:
+          Consumer<OrderListProvider>(builder: (context, provider, child) {
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Column(
+              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Row(
+                  mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     IconButton(
@@ -120,12 +123,16 @@ class _OrderTileStatefulWidgetState extends State<OrderTileStatefulWidget> {
                     icon: Icon(Icons.check_circle)),
               ],
             ),
-            onTap: () {
-              Navigator.pushNamed(context, "/item");
-            },
-          );
-        },
-      ),
+            IconButton(
+                onPressed: () => provider
+                    .removeOrder(OrderData(food: widget.orderData, qty: 1)),
+                icon: Icon(Icons.delete))
+          ],
+        );
+      }),
+      onTap: () {
+        Navigator.pushNamed(context, "/item");
+      },
     );
   }
 }

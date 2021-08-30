@@ -6,10 +6,12 @@ import 'package:dinner_planner/pages/orders/orders.dart';
 import 'package:dinner_planner/pages/profile/profile.dart';
 import 'package:dinner_planner/pages/settings/setting.dart';
 import 'package:dinner_planner/services/authentication.dart';
+import 'package:dinner_planner/services/order_list.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,15 +32,17 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: "/",
       routes: {
-        "/": (context) => StreamProvider<UserID?>.value(
-            value: AuthenticationService().user,
-            initialData: null,
-            child: Home()),
-        "/home": (context) => Home(),
+        "/": (context) => MultiProvider(providers: <SingleChildWidget>[
+              StreamProvider<UserID?>.value(
+                  value: AuthenticationService().user, initialData: null),
+              ChangeNotifierProvider(create: (context) => OrderListProvider()),
+            ], child: Home()),
+        // "/home": (context) => ChangeNotifierProvider<OrderListProvider>(
+        //     create: (context) => OrderListProvider(), child: Home()),
         "/auth": (context) => Auth(),
         "/item": (context) => ItemDetail(),
         "/settings": (context) => const Setting(),
-        "/order": (context) => const Orders(),
+        "/orders": (context) => const Orders(),
         "/profile": (context) => const Profile(),
       },
     );

@@ -1,5 +1,4 @@
 import 'package:dinner_planner/models/user.dart';
-import 'package:dinner_planner/pages/food_list/food_list_tile.dart';
 import 'package:dinner_planner/pages/orders/order_tile.dart';
 import 'package:dinner_planner/services/database.dart';
 import 'package:dinner_planner/services/order_list.dart';
@@ -22,28 +21,39 @@ class Orders extends StatelessWidget {
           icon: Icon(Icons.arrow_back_ios),
         ),
       ),
-      body: ChangeNotifierProvider<OrderListProvider>(
-        create: (_) => OrderListProvider(),
-        builder: (context, child) =>
-            Consumer<OrderListProvider>(builder: (context, provider, child) {
-          return ListView.builder(
-            itemCount: provider.orderList.length,
-            itemBuilder: (BuildContext context, int index) {
-              return OrderListTile(
-                  orderData: provider.orderList[index],
-                  index: index,
-                  userID: userID?.uid ?? null);
-            },
-            physics: BouncingScrollPhysics(),
-          );
-        }),
+      body: Center(
+        child: Consumer<OrderListProvider>(
+          builder: (context, provider, child) {
+            return ListView.builder(
+              itemCount: provider.orderList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return OrderListTile(
+                    orderData: provider.orderList[index],
+                    index: index,
+                    userID: userID?.uid ?? null);
+              },
+              physics: BouncingScrollPhysics(),
+            );
+          },
+        ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: FloatingActionButton(onPressed: () => null),
     );
   }
 }
 
-// FloatingActionButton(
-//           onPressed: () =>
-//               DatabaseService(uid: userID?.uid ?? null).updateUserOrders(data)), 
+
+          // floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+          // floatingActionButton: FloatingActionButton(
+          //     onPressed: () => DatabaseService(uid: userID?.uid ?? null)
+          //         .updateUserOrders(provider.orderList[0])),
+
+// ListView.builder(
+//             itemCount: provider.orders.length,
+//             itemBuilder: (BuildContext context, int index) {
+//               return OrderListTile(
+//                   orderData: provider.orders[index],
+//                   index: index,
+//                   userID: userID?.uid ?? null);
+//             },
+//             physics: BouncingScrollPhysics(),
+//           ),
