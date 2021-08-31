@@ -44,9 +44,7 @@ class HomeDrawer extends StatelessWidget {
                   leading: Icon(Icons.shopping_bag),
                   title: Text("Orders", style: _titleStyle),
                   trailing: Icon(Icons.arrow_right),
-                  onTap: () {
-                    Navigator.pushNamed(context, "/orders");
-                  },
+                  onTap: () => Navigator.pushNamed(context, "/orders"),
                 ),
               ],
             ),

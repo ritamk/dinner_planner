@@ -32,9 +32,9 @@ class Home extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.blue,
           toolbarHeight: 150.0,
           shape: appBarShapeBorder(),
-          elevation: 0.0,
           leading: Builder(builder: (context) {
             return IconButton(
               onPressed: () => Scaffold.of(context).openDrawer(),
@@ -43,6 +43,7 @@ class Home extends StatelessWidget {
             );
           }),
           title: SearchField(),
+          centerTitle: false,
           actions: <Widget>[
             Tooltip(
               message: 'Cart',
@@ -50,12 +51,14 @@ class Home extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushNamed(context, "/orders");
                 },
-                icon: Icon(Icons.shopping_cart),
+                icon: Icon(Icons.shopping_cart, color: Colors.white),
               ),
             ),
             Tooltip(
               message: 'Filter/Sort',
-              child: IconButton(onPressed: () {}, icon: Icon(Icons.tune)),
+              child: IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.tune, color: Colors.white)),
             ),
             const SizedBox(width: 8.0),
           ],

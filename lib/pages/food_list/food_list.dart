@@ -24,18 +24,25 @@ class FoodList extends StatelessWidget {
               switch (filter) {
                 case "All":
                   return FoodListTile(
-                      food: food[index], loggedIn: loggedIn, uid: userID?.uid);
+                      food: food[index],
+                      loggedIn: loggedIn,
+                      uid: userID?.uid,
+                      index: index);
                 case "Starters":
                   return filterFood(
-                      "starter", food[index], loggedIn, userID?.uid);
+                      "starter", food[index], loggedIn, userID?.uid, index);
                 case "Soups":
-                  return filterFood("soup", food[index], loggedIn, userID?.uid);
+                  return filterFood(
+                      "soup", food[index], loggedIn, userID?.uid, index);
                 case "Salads":
                   return filterFood(
-                      "salad", food[index], loggedIn, userID?.uid);
+                      "salad", food[index], loggedIn, userID?.uid, index);
                 default:
                   return FoodListTile(
-                      food: food[index], loggedIn: loggedIn, uid: userID?.uid);
+                      food: food[index],
+                      loggedIn: loggedIn,
+                      uid: userID?.uid,
+                      index: index);
               }
             },
             scrollDirection: Axis.vertical,
@@ -43,9 +50,10 @@ class FoodList extends StatelessWidget {
           );
   }
 
-  Widget filterFood(String type, Food food, bool loggedIn, String? uid) {
+  Widget filterFood(
+      String type, Food food, bool loggedIn, String? uid, int index) {
     return type == food.type
-        ? FoodListTile(food: food, loggedIn: loggedIn, uid: uid)
+        ? FoodListTile(food: food, loggedIn: loggedIn, uid: uid, index: index)
         : const Padding(padding: EdgeInsets.all(0.0));
   }
 }

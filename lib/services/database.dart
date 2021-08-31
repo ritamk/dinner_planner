@@ -36,17 +36,22 @@ class DatabaseService {
   }
 
   Future updateUserOrders(OrderData data) async {
-    return await userCollectionReference.doc(uid).update({
-      "order": FieldValue.arrayUnion([
-        {
-          "name": data.food.name,
-          "price": data.food.price,
-          "item": menuCollectionReference.doc(data.food.foodId),
-          "qty": data.qty,
-          "time": Timestamp.now(),
-        }
-      ])
-    });
+    try {
+      return await userCollectionReference.doc(uid).update({
+        "order": FieldValue.arrayUnion([
+          {
+            "name": data.food.name,
+            "price": data.food.price,
+            "item": menuCollectionReference.doc(data.food.foodId),
+            "qty": data.qty,
+            "time": Timestamp.now(),
+          }
+        ])
+      });
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
 
   Future removeUserOrders(OrderData data) async {

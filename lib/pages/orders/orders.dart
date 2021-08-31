@@ -5,8 +5,14 @@ import 'package:dinner_planner/services/order_list_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Orders extends StatelessWidget {
+class Orders extends StatefulWidget {
   const Orders({Key? key}) : super(key: key);
+
+  @override
+  _OrdersState createState() => _OrdersState();
+}
+
+class _OrdersState extends State<Orders> {
   @override
   Widget build(BuildContext context) {
     final UserID? userID = Provider.of<UserID?>(context);

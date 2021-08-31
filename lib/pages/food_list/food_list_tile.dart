@@ -8,11 +8,16 @@ import 'package:provider/provider.dart';
 
 class FoodListTile extends StatelessWidget {
   FoodListTile(
-      {Key? key, required this.food, required this.loggedIn, required this.uid})
+      {Key? key,
+      required this.food,
+      required this.loggedIn,
+      required this.uid,
+      required this.index})
       : super(key: key);
   final bool loggedIn;
   final Food food;
   final String? uid;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +30,7 @@ class FoodListTile extends StatelessWidget {
         food: food,
         loggedIn: loggedIn,
         uid: uid,
+        index: index,
       ),
     );
   }
@@ -36,12 +42,14 @@ class ListTileStatefulWidget extends StatefulWidget {
       required this.loggedIn,
       required this.vegColor,
       required this.food,
-      required this.uid})
+      required this.uid,
+      required this.index})
       : super(key: key);
   final bool loggedIn;
   final Color vegColor;
   final Food food;
   final String? uid;
+  final int index;
 
   @override
   _ListTileStatefulWidgetState createState() => _ListTileStatefulWidgetState();
@@ -105,7 +113,7 @@ class _ListTileStatefulWidgetState extends State<ListTileStatefulWidget> {
                   if (added) {
                     provider.addOrder(OrderData(food: widget.food, qty: 1));
                   } else {
-                    provider.removeOrder(OrderData(food: widget.food, qty: 1));
+                    provider.removeOrder(widget.food.name);
                   }
                 } else {
                   showCupertinoDialog<Widget>(

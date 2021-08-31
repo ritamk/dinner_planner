@@ -9,8 +9,8 @@ class OrderListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void removeOrder(OrderData orderData) {
-    _orders.remove(OrderData(food: orderData.food, qty: orderData.qty));
+  void removeOrder(String name) {
+    _orders.removeWhere((element) => element.food.name == name);
     notifyListeners();
   }
 
@@ -24,6 +24,14 @@ class OrderListProvider extends ChangeNotifier {
         ? _orders[index].qty -= 1
         : _orders[index].qty = 1;
     notifyListeners();
+  }
+
+  int get price {
+    int price = 0;
+    _orders.forEach((element) {
+      price += element.food.price * element.qty;
+    });
+    return price;
   }
 
   List<OrderData> get orderList => _orders;
