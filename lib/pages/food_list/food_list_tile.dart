@@ -1,7 +1,7 @@
 import 'package:dinner_planner/models/food.dart';
 import 'package:dinner_planner/models/order.dart';
 import 'package:dinner_planner/pages/dialog/dialog_to_login.dart';
-import 'package:dinner_planner/services/order_list.dart';
+import 'package:dinner_planner/services/order_list_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
