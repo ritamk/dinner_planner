@@ -49,7 +49,7 @@ class Home extends StatelessWidget {
               message: 'Cart',
               child: IconButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, "/orders");
+                  Navigator.pushNamed(context, "/cart");
                 },
                 icon: Icon(Icons.shopping_cart, color: Colors.white),
               ),

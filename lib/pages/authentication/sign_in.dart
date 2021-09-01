@@ -100,7 +100,10 @@ class _SignInState extends State<SignIn> {
                         },
                         child: Text(
                           "Sign In",
-                          style: TextStyle(color: Colors.white, fontSize: 16.0),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold),
                         ),
                         style: authButtonStyle(),
                       ),

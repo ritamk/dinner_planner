@@ -42,7 +42,10 @@ class _SignInAnonymouslyState extends State<SignInAnonymously> {
                   },
                   child: Text(
                     "Sign In Anonymously",
-                    style: TextStyle(color: Colors.white, fontSize: 16.0),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold),
                   ),
                   style: authButtonStyle().copyWith(
                     fixedSize:

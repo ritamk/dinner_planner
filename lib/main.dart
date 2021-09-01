@@ -1,5 +1,6 @@
 import 'package:dinner_planner/models/user.dart';
 import 'package:dinner_planner/pages/authentication/auth.dart';
+import 'package:dinner_planner/pages/cart/cart.dart';
 import 'package:dinner_planner/pages/home/home.dart';
 import 'package:dinner_planner/pages/item/item_detail.dart';
 import 'package:dinner_planner/pages/orders/orders.dart';
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
         "/": (context) => const Home(),
         "/auth": (context) => Auth(),
         "/item": (context) => const ItemDetail(),
+        "/cart": (context) => const Cart(),
         "/settings": (context) => const Setting(),
         "/orders": (context) => const Orders(),
         "/profile": (context) => const Profile(),

@@ -83,20 +83,10 @@ class _OrderTileStatefulWidgetState extends State<OrderTileStatefulWidget> {
                   shape: BoxShape.circle,
                   color: Colors.white,
                 ),
-                child: Stack(
-                  alignment: AlignmentDirectional.center,
-                  children: <Widget>[
-                    Icon(
-                      Icons.circle_outlined,
-                      color: widget.vegColor,
-                      size: 16.0,
-                    ),
-                    Icon(
-                      Icons.circle_rounded,
-                      color: widget.vegColor,
-                      size: 8.0,
-                    ),
-                  ],
+                child: Icon(
+                  Icons.radio_button_checked,
+                  color: widget.vegColor,
+                  size: 16.0,
                 ),
               ),
             ],

@@ -17,12 +17,11 @@ class EmptyPage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Icon(Icons.production_quantity_limits,
-                color: Colors.blue, size: 25.0),
+            const Icon(Icons.person_off, color: Colors.blue, size: 25.0),
             const SizedBox(height: 40.0),
             const Flexible(
               child: Text(
-                "C'mon, don't leave this empty.",
+                "Why leave this empty when you can log-in?",
                 style: TextStyle(color: Colors.blue, fontSize: 15.0),
               ),
             ),

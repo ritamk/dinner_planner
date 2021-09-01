@@ -118,7 +118,10 @@ class _SignUpState extends State<SignUp> {
                         },
                         child: Text(
                           "Sign Up",
-                          style: TextStyle(color: Colors.white, fontSize: 16.0),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold),
                         ),
                         style: authButtonStyle(),
                       ),

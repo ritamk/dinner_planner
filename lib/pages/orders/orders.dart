@@ -6,14 +6,9 @@ import 'package:dinner_planner/shared/empty.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Orders extends StatefulWidget {
+class Orders extends StatelessWidget {
   const Orders({Key? key}) : super(key: key);
 
-  @override
-  _OrdersState createState() => _OrdersState();
-}
-
-class _OrdersState extends State<Orders> {
   @override
   Widget build(BuildContext context) {
     final UserID? userID = Provider.of<UserID?>(context);
@@ -26,7 +21,7 @@ class _OrdersState extends State<Orders> {
                   onPressed: () => Navigator.pop(context, "/"),
                   icon: Icon(Icons.arrow_back_ios),
                 ),
-                title: Text("Orders"),
+                title: Text("Orders", style: TextStyle(color: Colors.blue)),
               ),
               body: ListView.builder(
                 itemCount: provider.orderList.length,
@@ -59,7 +54,6 @@ class _OrdersState extends State<Orders> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       const SizedBox(width: 16.0),
-                      // Text("Order Total: ₹ ${provider.price}"),
                       RichText(
                         text: TextSpan(
                           text: "Order total: ",
@@ -87,13 +81,3 @@ class _OrdersState extends State<Orders> {
     });
   }
 }
-
-// IconButton(
-//                     onPressed: () => DatabaseService(uid: widget.uid ?? null)
-//                         .updateUserOrders(widget.orderData),
-//                     icon: Icon(Icons.check_circle)),
-//               ],
-//             ),
-//             IconButton(
-//                 onPressed: () => provider.removeOrder(widget.orderData),
-//                 icon: Icon(Icons.delete))

@@ -11,7 +11,7 @@ class ItemDetail extends StatelessWidget {
           onPressed: () => Navigator.pop(context, "/"),
           icon: Icon(Icons.arrow_back_ios),
         ),
-        title: Text("Item Detail"),
+        title: Text("Item Detail", style: TextStyle(color: Colors.blue)),
       ),
     );
   }

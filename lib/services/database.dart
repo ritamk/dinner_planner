@@ -108,7 +108,8 @@ class DatabaseService {
           price: e.data()["price"],
           veg: e.data()["veg"],
           type: e.data()["type"],
-          foodId: e.data()["uid"]);
+          foodId: e.data()["uid"],
+          about: e.data()["about"]);
     }).toList();
   }
 
