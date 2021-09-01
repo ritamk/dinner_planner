@@ -52,7 +52,17 @@ class _OrderTileStatefulWidgetState extends State<OrderTileStatefulWidget> {
         key: Key(widget.orderData.food.name),
         onDismissed: (dismissDirection) =>
             provider.removeOrder(widget.orderData.food.name),
-        background: Container(color: Colors.red),
+        background: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 32.0),
+          color: Colors.red,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              const Icon(Icons.delete, color: Colors.white),
+              const Icon(Icons.delete, color: Colors.white),
+            ],
+          ),
+        ),
         child: ListTile(
           contentPadding: const EdgeInsets.all(15.0),
           shape:

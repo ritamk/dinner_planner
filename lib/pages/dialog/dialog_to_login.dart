@@ -27,7 +27,7 @@ class DialogToLogin extends StatelessWidget {
               children: <Widget>[
                 Flexible(
                   child: Text(
-                    "Add-to-cart function is only available when the user is logged in.",
+                    "Please log-in to user the add to cart function",
                     textAlign: TextAlign.center,
                     style:
                         TextStyle(fontSize: 16.0, color: Colors.red.shade700),
@@ -42,7 +42,10 @@ class DialogToLogin extends StatelessWidget {
                   Navigator.pushNamed(context, "/auth");
                 },
                 child: Text("Log In",
-                    style: TextStyle(color: Colors.white, fontSize: 16.0)),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold)),
                 style: authButtonStyle()),
           ],
         ),

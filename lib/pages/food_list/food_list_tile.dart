@@ -61,17 +61,18 @@ class _ListTileStatefulWidgetState extends State<ListTileStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: const EdgeInsets.all(15.0),
+      contentPadding:
+          const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
       tileColor: added ? Colors.green.shade50 : Colors.white,
       leading: Stack(
         children: <Widget>[
           Container(
+            width: 70.0,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15.0),
               color: Colors.black26,
             ),
-            constraints: BoxConstraints.tight(Size(80.0, 120.0)),
           ),
           Container(
             constraints: BoxConstraints.tight(Size.square(18.0)),

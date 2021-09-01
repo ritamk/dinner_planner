@@ -11,9 +11,7 @@ class Setting extends StatelessWidget {
           onPressed: () => Navigator.pop(context, "/"),
           icon: Icon(Icons.arrow_back_ios),
         ),
-      ),
-      body: const Center(
-        child: Text("Settings"),
+        title: Text("Settings"),
       ),
     );
   }

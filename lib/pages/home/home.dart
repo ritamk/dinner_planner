@@ -97,7 +97,7 @@ class Home extends StatelessWidget {
             leading: Icon(Icons.login_rounded),
             title: Text("Log In", style: TextStyle(fontSize: 16.0)),
             trailing: Icon(Icons.arrow_right),
-            onTap: () => Navigator.of(context).pushNamed("/auth"),
+            onTap: () => Navigator.pushNamed(context, "/auth"),
           ),
         ),
       ),

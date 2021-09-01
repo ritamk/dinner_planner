@@ -29,9 +29,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Restaurant',
       theme: ThemeData(
+        fontFamily: "Montserrat",
         appBarTheme: AppBarTheme(
             elevation: 0.0,
             centerTitle: true,
+            titleTextStyle:
+                TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
             backgroundColor: Colors.white10,
             iconTheme: IconThemeData(color: Colors.blue)),
         primarySwatch: Colors.blue,
@@ -41,9 +44,9 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: "/",
       routes: {
-        "/": (context) => Home(),
+        "/": (context) => const Home(),
         "/auth": (context) => Auth(),
-        "/item": (context) => ItemDetail(),
+        "/item": (context) => const ItemDetail(),
         "/settings": (context) => const Setting(),
         "/orders": (context) => const Orders(),
         "/profile": (context) => const Profile(),
