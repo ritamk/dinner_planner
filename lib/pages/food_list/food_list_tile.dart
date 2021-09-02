@@ -109,10 +109,24 @@ class _FoodTileState extends State<FoodTile> with TickerProviderStateMixin {
           ),
           children: <Widget>[
             imagePlaceholder(width),
-            const SizedBox(height: 20.0),
-            Text("${widget.food.about}",
-                style: const TextStyle(
-                    fontSize: 16.0, fontFamily: "KaiseiHarunoUmi-Medium")),
+            const SizedBox(height: 12.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              textDirection: TextDirection.ltr,
+              children: <Widget>[
+                Container(
+                  constraints: BoxConstraints(maxWidth: width / 0.8),
+                  child: Text(
+                    "${widget.food.about}",
+                    style: const TextStyle(
+                        fontSize: 16.0, fontFamily: "KaiseiHarunoUmi-Medium"),
+                  ),
+                ),
+                Text("₹ ${widget.food.price.toString()}",
+                    style: TextStyle(fontSize: 18.0)),
+              ],
+            ),
           ],
         ),
       ),

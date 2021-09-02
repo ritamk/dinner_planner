@@ -4,7 +4,6 @@ import 'package:dinner_planner/pages/food_list/food_list.dart';
 import 'package:dinner_planner/pages/home/search_field.dart';
 import 'package:dinner_planner/services/database.dart';
 import 'package:dinner_planner/services/order_list_provider.dart';
-import 'package:dinner_planner/shared/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -33,13 +32,12 @@ class Home extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blue,
-          toolbarHeight: 150.0,
-          shape: appBarShapeBorder(),
+          toolbarHeight: 140.0,
+          // shape: appBarShapeBorder(context),
           leading: Builder(builder: (context) {
             return IconButton(
               onPressed: () => Scaffold.of(context).openDrawer(),
-              icon: const Icon(Icons.menu, color: Colors.white),
+              icon: const Icon(Icons.menu, color: Colors.blue),
               tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
             );
           }),
@@ -57,16 +55,16 @@ class Home extends StatelessWidget {
                   return Stack(
                     alignment: Alignment.topRight,
                     children: <Widget>[
-                      Icon(Icons.shopping_cart, color: Colors.white),
+                      Icon(Icons.shopping_cart, color: Colors.blue),
                       provider.orderList.isEmpty
                           ? const Padding(padding: EdgeInsets.all(0.0))
                           : Stack(
                               alignment: Alignment.center,
                               children: <Icon>[
                                 Icon(Icons.circle,
-                                    color: Colors.blue, size: 14.0),
+                                    color: Colors.white, size: 14.0),
                                 Icon(Icons.circle,
-                                    color: Colors.red[700], size: 11.0),
+                                    color: Colors.red[700], size: 10.0),
                               ],
                             ),
                     ],
@@ -77,28 +75,13 @@ class Home extends StatelessWidget {
             Tooltip(
               message: 'Filter/Sort',
               child: IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.tune, color: Colors.white)),
+                  onPressed: () {}, icon: Icon(Icons.tune, color: Colors.blue)),
             ),
             const SizedBox(width: 8.0),
           ],
           bottom: PreferredSize(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 16.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: const FilterToggleButtonWidget(),
-                  ),
-                ],
-              ),
-            ),
-            preferredSize: Size.fromHeight(80.0),
-          ),
+              preferredSize: Size(double.infinity, 100.0),
+              child: FilterToggleButtonWidget()),
         ),
         body: StreamProvider<List<Food>>.value(
           value: DatabaseService().food,
@@ -133,69 +116,56 @@ class FilterToggleButtonWidget extends StatefulWidget {
       _FilterToggleButtonWidgetState();
 }
 
-class _FilterToggleButtonWidgetState extends State<FilterToggleButtonWidget> {
-  List<bool> selectedIndex = [];
-  Color noColor = Colors.black.withAlpha(0);
+class _FilterToggleButtonWidgetState extends State<FilterToggleButtonWidget>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
-    selectedIndex = [
-      true,
-      false,
-      false,
-      false,
-    ];
+    _tabController = TabController(length: selectedFilter.length, vsync: this);
   }
 
   @override
   void dispose() {
+    _tabController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ToggleButtons(
-      borderColor: noColor,
-      selectedBorderColor: noColor,
-      splashColor: noColor,
-      children: [
-        filterContainerWidget(selectedFilter[0], selectedIndex[0]),
-        filterContainerWidget(selectedFilter[1], selectedIndex[1]),
-        filterContainerWidget(selectedFilter[2], selectedIndex[2]),
-        filterContainerWidget(selectedFilter[3], selectedIndex[3]),
-      ],
-      isSelected: selectedIndex,
-      onPressed: (index) {
+    return TabBar(
+      indicatorSize: TabBarIndicatorSize.label,
+      onTap: (index) {
         setState(() {
-          for (int i = 0; i < selectedIndex.length; i++) {
-            selectedIndex[i] = i == index;
-            filterIndex.value = index;
-          }
+          filterIndex.value = index;
         });
       },
+      isScrollable: true,
+      controller: _tabController,
+      indicatorColor: Colors.transparent,
+      tabs: <Widget>[
+        tabs(0, filterIndex.value),
+        tabs(1, filterIndex.value),
+        tabs(2, filterIndex.value),
+        tabs(3, filterIndex.value),
+      ],
     );
   }
 
-  Widget filterContainerWidget(String name, bool selected) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Container(
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30.0),
-          color: selected ? Colors.white30 : Colors.white,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-          child: Text(name,
-              style: TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
-                  color: selected ? Colors.white : Colors.black54),
-              textAlign: TextAlign.center),
-        ),
-      ),
+  Container tabs(int index, int selected) {
+    return Container(
+      constraints: BoxConstraints(maxHeight: 100.0),
+      margin: const EdgeInsets.symmetric(vertical: 4.0),
+      padding: const EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+          color: selected == index ? Colors.blue : Colors.white,
+          borderRadius: BorderRadius.circular(25.0)),
+      child: Text(selectedFilter[index],
+          style: TextStyle(
+              color: selected == index ? Colors.white : Colors.blue,
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold)),
     );
   }
 }

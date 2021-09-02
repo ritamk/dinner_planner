@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
-ShapeBorder appBarShapeBorder() {
+ShapeBorder appBarShapeBorder(BuildContext context) {
+  final double width = MediaQuery.of(context).size.width;
   return RoundedRectangleBorder(
     borderRadius: BorderRadius.only(
-        bottomLeft: Radius.elliptical(25.0, 15.0),
-        bottomRight: Radius.elliptical(25.0, 15.0)),
+      topLeft: const Radius.circular(25.0),
+      topRight: const Radius.circular(25.0),
+      bottomLeft: Radius.elliptical(width, 40.0),
+      bottomRight: Radius.elliptical(width, 40.0),
+    ),
   );
 }
 

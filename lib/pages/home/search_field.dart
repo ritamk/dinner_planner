@@ -36,15 +36,15 @@ class _SearchFieldState extends State<SearchField>
             focusNode: _focusNode,
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.symmetric(horizontal: 12.0),
-              fillColor: Colors.white,
+              fillColor: Colors.blue,
               filled: true,
               hintText: "Search",
-              hintStyle: TextStyle(fontSize: 18.0),
+              hintStyle: TextStyle(fontSize: 18.0, color: Colors.white),
               enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(35.0),
+                  borderRadius: BorderRadius.circular(50.0),
                   borderSide: BorderSide.none),
               focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(35.0),
+                  borderRadius: BorderRadius.circular(50.0),
                   borderSide: BorderSide.none),
               prefixIcon: IconButton(
                 tooltip: "Search",
@@ -61,11 +61,11 @@ class _SearchFieldState extends State<SearchField>
                   });
                 },
                 icon: isOpen
-                    ? Icon(Icons.close)
-                    : Icon(Icons.search, color: Colors.blue),
+                    ? Icon(Icons.close, color: Colors.white)
+                    : Icon(Icons.search, color: Colors.white),
               ),
             ),
-            style: TextStyle(fontSize: 18.0),
+            style: TextStyle(fontSize: 18.0, color: Colors.white),
             textInputAction: TextInputAction.search,
           ),
         );
