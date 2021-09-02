@@ -1,5 +1,5 @@
 import 'package:dinner_planner/models/user.dart';
-import 'package:dinner_planner/shared/empty.dart';
+import 'package:dinner_planner/shared/not_logged_in.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +20,6 @@ class Profile extends StatelessWidget {
               title: Text("Profile", style: TextStyle(color: Colors.blue)),
             ),
           )
-        : EmptyPage();
+        : NotLoggedIn();
   }
 }

@@ -21,8 +21,8 @@ class OrderListProvider extends ChangeNotifier {
 
   void removeQty(OrderData orderData, int index) {
     (_orders[index].qty == 1)
-        ? _orders[index].qty -= 1
-        : _orders[index].qty = 1;
+        ? _orders[index].qty = 1
+        : _orders[index].qty -= 1;
     notifyListeners();
   }
 

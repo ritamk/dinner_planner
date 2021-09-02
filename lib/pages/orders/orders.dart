@@ -37,10 +37,24 @@ class Orders extends StatelessWidget {
                   FloatingActionButtonLocation.endDocked,
               floatingActionButton: FloatingActionButton(
                 tooltip: "Confirm Order",
-                onPressed: () => provider.orderList.forEach((element) {
-                  DatabaseService(uid: userID.uid).updateUserOrders(element);
-                  print(provider.price.toString());
-                }),
+                onPressed: () {
+                  try {
+                    provider.orderList.forEach((element) {
+                      DatabaseService(uid: userID.uid)
+                          .updateUserOrders(element);
+                    });
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content:
+                          Text("Order Confirmed!\nPlease go to Orders page."),
+                    ));
+                  } catch (e) {
+                    print(e.toString());
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                          "Couldn't place order.\nPlease try again later."),
+                    ));
+                  }
+                },
                 child: Icon(Icons.check, color: Colors.white),
               ),
               bottomNavigationBar: BottomAppBar(

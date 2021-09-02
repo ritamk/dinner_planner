@@ -48,108 +48,37 @@ class _OrderTileStatefulWidgetState extends State<OrderTileStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return Consumer<OrderListProvider>(builder: (context, provider, child) {
-      return Dismissible(
-        key: Key(widget.orderData.food.name),
-        onDismissed: (dismissDirection) =>
-            provider.removeOrder(widget.orderData.food.name),
-        background: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 32.0),
-          color: Colors.red,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              const Icon(Icons.delete, color: Colors.white),
-              const Icon(Icons.delete, color: Colors.white),
-            ],
-          ),
+      return ListTile(
+        contentPadding: const EdgeInsets.all(15.0),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
+        tileColor: Colors.white,
+        leading: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            IconButton(
+                onPressed: () =>
+                    provider.removeQty(widget.orderData, widget.index),
+                icon: Icon(Icons.remove_circle, size: 18.0)),
+            Text("${provider.orderList[widget.index].qty}",
+                style: TextStyle(fontSize: 17.0)),
+            IconButton(
+                onPressed: () =>
+                    provider.addQty(widget.orderData, widget.index),
+                icon: Icon(Icons.add_circle, size: 18.0)),
+          ],
         ),
-        child: ListTile(
-          contentPadding: const EdgeInsets.all(15.0),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
-          tileColor: Colors.white,
-          leading: Stack(
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15.0),
-                  color: Colors.black26,
-                ),
-                constraints: BoxConstraints.tight(Size(80.0, 120.0)),
-              ),
-              Container(
-                constraints: BoxConstraints.tight(Size.square(18.0)),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white,
-                ),
-                child: Icon(
-                  Icons.radio_button_checked,
-                  color: widget.vegColor,
-                  size: 16.0,
-                ),
-              ),
-            ],
-          ),
-          title: Text(widget.orderData.food.name,
-              style: TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.teal.shade900)),
-          subtitle: Text("₹ ${widget.orderData.food.price.toString()}"),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              IconButton(
-                  onPressed: () =>
-                      provider.removeQty(widget.orderData, widget.index),
-                  icon: Icon(Icons.remove_circle, size: 18.0)),
-              Text("${provider.orderList[widget.index].qty}",
-                  style: TextStyle(fontSize: 17.0)),
-              IconButton(
-                  onPressed: () =>
-                      provider.addQty(widget.orderData, widget.index),
-                  icon: Icon(Icons.add_circle, size: 18.0)),
-            ],
-          ),
-          onTap: () {
-            Navigator.pushNamed(context, "/item");
-          },
-        ),
+        title: Text(widget.orderData.food.name,
+            style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.teal.shade900)),
+        subtitle: Text("₹ ${widget.orderData.food.price.toString()}"),
+        trailing: IconButton(
+            onPressed: () => provider.removeOrder(widget.orderData.food.name),
+            icon: Icon(Icons.delete)),
       );
     });
   }
 }
-
-// Row(
-//           mainAxisSize: MainAxisSize.min,
-//           children: <Widget>[
-//             Column(
-//               mainAxisSize: MainAxisSize.min,
-//               children: <Widget>[
-//                 Row(
-                  // mainAxisSize: MainAxisSize.min,
-                  // children: <Widget>[
-                  //   IconButton(
-                  //       onPressed: () =>
-                  //           provider.removeQty(widget.orderData, widget.index),
-                  //       icon: Icon(Icons.remove, size: 10.0)),
-                  //   Text("${provider.orderList[widget.index].qty}"),
-                  //   IconButton(
-                  //       onPressed: () =>
-                  //           provider.addQty(widget.orderData, widget.index),
-                  //       icon: Icon(Icons.add, size: 10.0)),
-//                   ],
-//                 ),
-            //     IconButton(
-            //         onPressed: () => DatabaseService(uid: widget.uid ?? null)
-            //             .updateUserOrders(widget.orderData),
-            //         icon: Icon(Icons.check_circle)),
-            //   ],
-            // ),
-            // IconButton(
-            //     onPressed: () => provider.removeOrder(widget.orderData),
-            //     icon: Icon(Icons.delete))
-//           ],
-//         );

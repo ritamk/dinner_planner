@@ -24,15 +24,14 @@ class FoodTile extends StatefulWidget {
 }
 
 class _FoodTileState extends State<FoodTile> with TickerProviderStateMixin {
-  static late Color vegColor;
   bool added = false;
-  static late Animation<double> _addClose;
-  static late Animation<double> _openClose;
-  static final Animatable<double> _tweenAddAnimatable =
+  late Animation<double> _addClose;
+  late Animation<double> _openClose;
+  final Animatable<double> _tweenAddAnimatable =
       Tween<double>(begin: 0.0, end: 0.125);
-  static final Animatable<double> _tweenOpenAnimatable =
+  final Animatable<double> _tweenOpenAnimatable =
       Tween<double>(begin: 0.0, end: 0.5);
-  static final Animatable<double> _curveAnimatable =
+  final Animatable<double> _curveAnimatable =
       CurveTween(curve: Curves.easeInOut);
   late AnimationController _openClosecontroller;
   late AnimationController _addClosecontroller;
@@ -48,69 +47,79 @@ class _FoodTileState extends State<FoodTile> with TickerProviderStateMixin {
         _addClosecontroller.drive(_tweenAddAnimatable.chain(_curveAnimatable));
     _openClose = _openClosecontroller
         .drive(_tweenOpenAnimatable.chain(_curveAnimatable));
-    vegColor = widget.food.veg ? Colors.green : Colors.red;
+  }
+
+  @override
+  void dispose() {
+    _addClosecontroller.dispose();
+    _openClosecontroller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width / 2.0;
+    double width = MediaQuery.of(context).size.width / 2.0;
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25.0),
-        color: added ? Colors.green.shade50 : Colors.white,
-      ),
-      child: ExpansionTile(
-        childrenPadding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
-        onExpansionChanged: (val) => val
-            ? _openClosecontroller.forward()
-            : _openClosecontroller.reverse(),
-        leading: RotationTransition(
-            turns: _openClose, child: Icon(Icons.keyboard_arrow_down)),
-        title: Text("${widget.food.name}",
-            style:
-                const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
-        trailing: Consumer<OrderListProvider>(
-          builder: (context, provider, child) {
-            return IconButton(
-              icon: RotationTransition(
-                turns: _addClose,
-                child: Icon(Icons.add),
-              ),
-              onPressed: () {
-                setState(() {
-                  if (widget.loggedIn) {
-                    added = !added;
-                    if (added) {
-                      provider.addOrder(OrderData(food: widget.food, qty: 1));
-                      _addClosecontroller.forward();
-                    } else {
-                      provider.removeOrder(widget.food.name);
-                      _addClosecontroller.reverse();
-                    }
-                  } else {
-                    showCupertinoDialog<Widget>(
-                        context: context,
-                        builder: (builder) => DialogToLogin(),
-                        barrierDismissible: true);
-                  }
-                });
-              },
-            );
-          },
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25.0),
+          color: added ? Colors.green.shade50 : Colors.white,
         ),
-        children: <Widget>[
-          imagePlaceholder(vegColor, width),
-          const SizedBox(height: 20.0),
-          Text("${widget.food.about}",
-              style: TextStyle(fontSize: 16.0, fontFamily: "DMSerif")),
-        ],
+        child: ExpansionTile(
+          childrenPadding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
+          onExpansionChanged: (val) => val
+              ? _openClosecontroller.forward()
+              : _openClosecontroller.reverse(),
+          leading: RotationTransition(
+              turns: _openClose, child: const Icon(Icons.keyboard_arrow_down)),
+          title: Text("${widget.food.name}",
+              style:
+                  const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
+          trailing: Consumer<OrderListProvider>(
+            builder: (context, provider, child) {
+              return IconButton(
+                icon: RotationTransition(
+                  turns: _addClose,
+                  child: const Icon(Icons.add),
+                ),
+                onPressed: () {
+                  setState(() {
+                    if (widget.loggedIn) {
+                      added = !added;
+                      if (added) {
+                        provider.addOrder(OrderData(food: widget.food, qty: 1));
+                        _addClosecontroller.forward();
+                      } else {
+                        provider.removeOrder(widget.food.name);
+                        _addClosecontroller.reverse();
+                      }
+                    } else {
+                      showCupertinoDialog<Widget>(
+                          context: context,
+                          builder: (builder) => const DialogToLogin(),
+                          barrierDismissible: true);
+                    }
+                  });
+                },
+              );
+            },
+          ),
+          children: <Widget>[
+            imagePlaceholder(width),
+            const SizedBox(height: 20.0),
+            Text("${widget.food.about}",
+                style: const TextStyle(
+                    fontSize: 16.0, fontFamily: "KaiseiHarunoUmi-Medium")),
+          ],
+        ),
       ),
     );
   }
 
-  Stack imagePlaceholder(Color veg, double width) {
+  Stack imagePlaceholder(double width) {
     return Stack(
       alignment: Alignment.topLeft,
       children: <Widget>[
@@ -128,24 +137,19 @@ class _FoodTileState extends State<FoodTile> with TickerProviderStateMixin {
           width: double.infinity,
         ),
         Positioned(
-          left: 10,
+          left: 5.0,
           top: 5.0,
           child: Stack(
             alignment: Alignment.center,
             children: <Widget>[
               const Icon(Icons.circle, color: Colors.white, size: 30.0),
-              Icon(Icons.radio_button_checked, color: vegColor, size: 22.0),
+              Icon(Icons.radio_button_checked,
+                  color: widget.food.veg ? Colors.green : Colors.red,
+                  size: 22.0),
             ],
           ),
         ),
       ],
     );
-  }
-
-  @override
-  void dispose() {
-    _addClosecontroller.dispose();
-    _openClosecontroller.dispose();
-    super.dispose();
   }
 }

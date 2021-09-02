@@ -3,6 +3,7 @@ import 'package:dinner_planner/pages/home/drawer.dart';
 import 'package:dinner_planner/pages/food_list/food_list.dart';
 import 'package:dinner_planner/pages/home/search_field.dart';
 import 'package:dinner_planner/services/database.dart';
+import 'package:dinner_planner/services/order_list_provider.dart';
 import 'package:dinner_planner/shared/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,26 @@ class Home extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushNamed(context, "/cart");
                 },
-                icon: Icon(Icons.shopping_cart, color: Colors.white),
+                icon: Consumer<OrderListProvider>(
+                    builder: (context, provider, child) {
+                  return Stack(
+                    alignment: Alignment.topRight,
+                    children: <Widget>[
+                      Icon(Icons.shopping_cart, color: Colors.white),
+                      provider.orderList.isEmpty
+                          ? const Padding(padding: EdgeInsets.all(0.0))
+                          : Stack(
+                              alignment: Alignment.center,
+                              children: <Icon>[
+                                Icon(Icons.circle,
+                                    color: Colors.blue, size: 14.0),
+                                Icon(Icons.circle,
+                                    color: Colors.red[700], size: 11.0),
+                              ],
+                            ),
+                    ],
+                  );
+                }),
               ),
             ),
             Tooltip(
