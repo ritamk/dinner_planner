@@ -17,7 +17,7 @@ class DatabaseService {
   final DocumentReference menuDocumentReference =
       FirebaseFirestore.instance.collection("Menu").doc();
 
-  Future updateUserData(ExtendedUserData data) async {
+  Future setUserData(ExtendedUserData data) async {
     return await userCollectionReference.doc(uid).set({
       "name": data.name,
       "phone": data.phone,
@@ -32,6 +32,20 @@ class DatabaseService {
       },
       "order": <OrderData>[],
       "orderHistory": <OrderData>[],
+    });
+  }
+
+  Future updateUserData(ExtendedUserData data) async {
+    return await userCollectionReference.doc(uid).update({
+      "name": data.name,
+      "phone": data.phone,
+      "address": {
+        "landmark": data.landmark,
+        "adLine": data.adLine,
+        "city": data.city,
+        "pin": data.pin,
+        "state": data.state,
+      },
     });
   }
 
@@ -101,6 +115,22 @@ class DatabaseService {
         uid: uid!, name: snapshot["name"], userPic: snapshot["userPic"]);
   }
 
+  ExtendedUserData? _extendedUserDataFromSnapshot(DocumentSnapshot snapshot) {
+    try {
+      return ExtendedUserData(
+        uid: uid!,
+        name: snapshot["name"],
+        userPic: snapshot["userPic"],
+        email: snapshot["email"],
+        phone: snapshot["phone"],
+        address: snapshot["address"],
+      );
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
   List<Food> _foodListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((dynamic e) {
       return Food(
@@ -135,5 +165,10 @@ class DatabaseService {
         .doc(uid)
         .snapshots()
         .map((DocumentSnapshot snapshot) => _userDataFromSnapshot(snapshot));
+  }
+
+  Stream<ExtendedUserData?> get extendedUserData {
+    return userCollectionReference.doc(uid).snapshots().map(
+        (DocumentSnapshot snapshot) => _extendedUserDataFromSnapshot(snapshot));
   }
 }

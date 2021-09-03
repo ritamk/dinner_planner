@@ -45,18 +45,19 @@ class AuthenticationService {
           .createUserWithEmailAndPassword(email: mail, password: pass);
       User? user = userCredential.user;
 
-      await DatabaseService(uid: user!.uid).updateUserData(ExtendedUserData(
-          uid: user.uid,
-          name: username,
-          userPic: "https://robohash.org/$username",
-          /* "https://avatars.dicebear.com/api/micah/$username.svg?mood[]=happy" */
-          email: user.email,
-          phone: "",
-          landmark: "",
-          adLine: "",
-          city: "",
-          state: "",
-          pin: ""));
+      await DatabaseService(uid: user!.uid).setUserData(ExtendedUserData(
+        uid: user.uid,
+        name: username,
+        userPic: "https://robohash.org/$username",
+        /* "https://avatars.dicebear.com/api/micah/$username.svg?mood[]=happy" */
+        email: user.email,
+        phone: "",
+        landmark: "",
+        adLine: "",
+        city: "",
+        state: "",
+        pin: "",
+      ));
 
       return _userFromFirebaseUser(user);
     } catch (e) {
