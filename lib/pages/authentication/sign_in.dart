@@ -89,13 +89,16 @@ class _SignInState extends State<SignIn> {
                             });
                             dynamic result = await AuthenticationService()
                                 .signInWithEmailAndPass(mail, pass);
-                            result == null
-                                ? setState(() {
+                            result != null
+                                ? Navigator.pop(context, "/")
+                                : setState(() {
                                     loading = false;
-                                    error =
-                                        "There was an error. Check credentials and/or network connection.";
-                                  })
-                                : Navigator.pop(context, "/");
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                      content: Text(
+                                          "Couldn't sign-in, try again later.\nPlease check credentials and/or network connection."),
+                                    ));
+                                  });
                           }
                         },
                         child: Text(
@@ -106,20 +109,6 @@ class _SignInState extends State<SignIn> {
                               fontWeight: FontWeight.bold),
                         ),
                         style: authButtonStyle(),
-                      ),
-                      const SizedBox(height: 25.0),
-                      Flex(
-                        direction: Axis.vertical,
-                        children: <Widget>[
-                          Container(
-                            child: Text(
-                              error,
-                              textAlign: TextAlign.center,
-                              style:
-                                  TextStyle(color: Colors.red, fontSize: 14.0),
-                            ),
-                          ),
-                        ],
                       ),
                     ],
                   ),

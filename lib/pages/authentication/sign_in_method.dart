@@ -32,13 +32,15 @@ class _SignInAnonymouslyState extends State<SignInAnonymously> {
                     });
                     dynamic result =
                         await AuthenticationService().signInAnonymously();
-                    result == null
-                        ? setState(() {
+                    result != null
+                        ? Navigator.pop(context, "/")
+                        : setState(() {
                             loading = false;
-                            error =
-                                "There was an error. Check the network connection.";
-                          })
-                        : Navigator.pop(context, "/");
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  "Couldn't sign-in, try again later.\nPlease check credentials and/or network connection."),
+                            ));
+                          });
                   },
                   child: Text(
                     "Sign In Anonymously",
@@ -51,19 +53,6 @@ class _SignInAnonymouslyState extends State<SignInAnonymously> {
                     fixedSize:
                         MaterialStateProperty.all<Size>(Size(180.0, 40.0)),
                   ),
-                ),
-                const SizedBox(height: 25.0),
-                Flex(
-                  direction: Axis.vertical,
-                  children: <Widget>[
-                    Container(
-                      child: Text(
-                        error,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.red, fontSize: 14.0),
-                      ),
-                    ),
-                  ],
                 ),
               ],
             ),

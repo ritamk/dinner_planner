@@ -36,17 +36,22 @@ class DatabaseService {
   }
 
   Future updateUserData(ExtendedUserData data) async {
-    return await userCollectionReference.doc(uid).update({
-      "name": data.name,
-      "phone": data.phone,
-      "address": {
-        "landmark": data.landmark,
-        "adLine": data.adLine,
-        "city": data.city,
-        "pin": data.pin,
-        "state": data.state,
-      },
-    });
+    try {
+      return await userCollectionReference.doc(uid).update({
+        "name": data.name,
+        "phone": data.phone,
+        "address": {
+          "landmark": data.landmark,
+          "adLine": data.adLine,
+          "city": data.city,
+          "pin": data.pin,
+          "state": data.state,
+        },
+      });
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
 
   Future updateUserOrders(OrderData data) async {
