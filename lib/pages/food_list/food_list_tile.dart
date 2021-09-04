@@ -11,12 +11,10 @@ class FoodTile extends StatefulWidget {
       {Key? key,
       required this.food,
       required this.loggedIn,
-      required this.uid,
       required this.index})
       : super(key: key);
   final bool loggedIn;
   final Food food;
-  final String? uid;
   final int index;
 
   @override

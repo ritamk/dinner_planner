@@ -1,133 +1,85 @@
-import 'package:dinner_planner/models/food.dart';
-import 'package:dinner_planner/models/user.dart';
-import 'package:dinner_planner/pages/food_list/food_list_tile.dart';
-import 'package:dinner_planner/shared/loading.dart';
+import 'package:dinner_planner/pages/food_list/filters/all.dart';
+import 'package:dinner_planner/pages/food_list/filters/salad.dart';
+import 'package:dinner_planner/pages/food_list/filters/soup.dart';
+import 'package:dinner_planner/pages/food_list/filters/starter.dart';
+import 'package:dinner_planner/services/filter_list_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class FoodList extends StatelessWidget {
-  const FoodList({Key? key, required this.filter}) : super(key: key);
-  final String filter;
+class FoodList extends StatefulWidget {
+  const FoodList({Key? key, required this.loggedIn}) : super(key: key);
+  final bool loggedIn;
 
   @override
+  _FoodListState createState() => _FoodListState();
+}
+
+class _FoodListState extends State<FoodList> {
+  @override
   Widget build(BuildContext context) {
-    final UserID? userID = Provider.of<UserID?>(context);
-    final List<Food> food = Provider.of<List<Food>>(context);
-    final bool loggedIn = userID != null ? true : false;
+    return Consumer<FilterListProvider>(
+      builder: (context, provider, child) {
+        final PageController _pageController = PageController();
+        final List<Widget> _pages = [
+          AllFoodList(loggedIn: widget.loggedIn),
+          StarterFoodList(loggedIn: widget.loggedIn),
+          SoupFoodList(loggedIn: widget.loggedIn),
+          SaladFoodList(loggedIn: widget.loggedIn),
+        ];
 
-    return food.isEmpty
-        ? Loading()
-        : ListView.builder(
-            itemCount: food.length,
-            itemBuilder: (BuildContext context, int index) {
-              switch (filter) {
-                case "All":
-                  return FoodTile(
-                      food: food[index],
-                      loggedIn: loggedIn,
-                      uid: userID?.uid,
-                      index: index);
-                case "Starters":
-                  return filterFood(
-                      "starter", food[index], loggedIn, userID?.uid, index);
-                case "Soups":
-                  return filterFood(
-                      "soup", food[index], loggedIn, userID?.uid, index);
-                case "Salads":
-                  return filterFood(
-                      "salad", food[index], loggedIn, userID?.uid, index);
-                default:
-                  return FoodTile(
-                      food: food[index],
-                      loggedIn: loggedIn,
-                      uid: userID?.uid,
-                      index: index);
-              }
+        return PageView.builder(
+            itemCount: 4,
+            itemBuilder: (context, index) {
+              return _pages[provider.filterIndex];
             },
-            scrollDirection: Axis.vertical,
-            physics: const BouncingScrollPhysics(),
-          );
-  }
-
-  Widget filterFood(
-      String type, Food food, bool loggedIn, String? uid, int index) {
-    return type == food.type
-        ? FoodTile(food: food, loggedIn: loggedIn, uid: uid, index: index)
-        : const Padding(padding: EdgeInsets.all(0.0));
+            controller: _pageController,
+            onPageChanged: (num) {
+              setState(() {
+                provider.filterChange(num);
+              });
+            });
+      },
+    );
   }
 }
 
-// ListView.builder(
+// @override
+//   Widget build(BuildContext context) {
+//     final List<Food> food = Provider.of<List<Food>>(context);
+
+//     return food.isEmpty
+//         ? Loading()
+//         : ListView.builder(
 //             itemCount: food.length,
 //             itemBuilder: (BuildContext context, int index) {
-//               switch (filter) {
-//                 case "All":
-//                   return FoodTileTest(
-//                       food: food[index],
-//                       loggedIn: loggedIn,
-//                       uid: userID?.uid,
-//                       index: index);
-//                 case "Starters":
-//                   return filterFood(
-//                       "starter", food[index], loggedIn, userID?.uid, index);
-//                 case "Soups":
-//                   return filterFood(
-//                       "soup", food[index], loggedIn, userID?.uid, index);
-//                 case "Salads":
-//                   return filterFood(
-//                       "salad", food[index], loggedIn, userID?.uid, index);
-//                 default:
-//                   return FoodListTile(
-//                       food: food[index],
-//                       loggedIn: loggedIn,
-//                       uid: userID?.uid,
-//                       index: index);
-//               }
+//               return Consumer<FilterListProvider>(
+//                 builder: (context, provider, child) {
+//                   switch (provider.filteredString) {
+//                     case "All":
+//                       return FoodTile(
+//                           food: food[index], loggedIn: loggedIn, index: index);
+//                     case "Starters":
+//                       return filterFood(
+//                           "starter", food[index], loggedIn, index);
+//                     case "Soups":
+//                       return filterFood("soup", food[index], loggedIn, index);
+//                     case "Salads":
+//                       return filterFood("salad", food[index], loggedIn, index);
+//                     default:
+//                       return FoodTile(
+//                           food: food[index], loggedIn: loggedIn, index: index);
+//                   }
+//                 },
+//               );
 //             },
 //             scrollDirection: Axis.vertical,
 //             physics: const BouncingScrollPhysics(),
 //           );
-
-// Compute (Isolate):-
-
-//     Future<List<Food?>> filteredTileWidgets() async {
-//       return await compute<FilterComparisonIsolate, List<Food?>>(
-//           sortedList,
-//           FilterComparisonIsolate(
-//               filter: filter, food: food, loggedIn: loggedIn));
-//     } 
-
-// List<Food?> sortedList(FilterComparisonIsolate data) {
-//   final List<Food?> list =
-//       List.generate(data.food.length, (index) => data.food[index]);
-//   final List<Food?> listSoup = List.generate(
-//     data.food.length,
-//     (index) => data.food[index].type == "soup" ? data.food[index] : null,
-//   );
-//   final List<Food?> listSalad = List.generate(
-//     data.food.length,
-//     (index) => data.food[index].type == "salad" ? data.food[index] : null,
-//   );
-//   final List<Food?> listStarter = List.generate(
-//     data.food.length,
-//     (index) => data.food[index].type == "starter" ? data.food[index] : null,
-//   );
-
-//   switch (data.filter) {
-//     case "All":
-//       return list;
-//     case "Starters":
-//       listStarter.removeWhere((element) => element == null);
-//       return listStarter;
-//     case "Soups":
-//       listSoup.removeWhere((element) => element == null);
-//       return listSoup;
-//     case "Salads":
-//       listSalad.removeWhere((element) => element == null);
-//       return listSalad;
-//     default:
-//       throw "Something went wrong with sortedListIsolate";
 //   }
-// }
- 
+
+//   Widget filterFood(String type, Food food, bool loggedIn, int index) {
+//     return type == food.type
+//         ? FoodTile(food: food, loggedIn: loggedIn, index: index)
+//         : const Padding(padding: EdgeInsets.all(0.0));
+//   }

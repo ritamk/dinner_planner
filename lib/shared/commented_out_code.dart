@@ -91,3 +91,80 @@
 //     );
 //   }
 // }
+
+
+// ListView.builder(
+//             itemCount: food.length,
+//             itemBuilder: (BuildContext context, int index) {
+//               switch (filter) {
+//                 case "All":
+//                   return FoodTileTest(
+//                       food: food[index],
+//                       loggedIn: loggedIn,
+//                       uid: userID?.uid,
+//                       index: index);
+//                 case "Starters":
+//                   return filterFood(
+//                       "starter", food[index], loggedIn, userID?.uid, index);
+//                 case "Soups":
+//                   return filterFood(
+//                       "soup", food[index], loggedIn, userID?.uid, index);
+//                 case "Salads":
+//                   return filterFood(
+//                       "salad", food[index], loggedIn, userID?.uid, index);
+//                 default:
+//                   return FoodListTile(
+//                       food: food[index],
+//                       loggedIn: loggedIn,
+//                       uid: userID?.uid,
+//                       index: index);
+//               }
+//             },
+//             scrollDirection: Axis.vertical,
+//             physics: const BouncingScrollPhysics(),
+//           );
+
+
+
+// Compute (Isolate):-
+
+//     Future<List<Food?>> filteredTileWidgets() async {
+//       return await compute<FilterComparisonIsolate, List<Food?>>(
+//           sortedList,
+//           FilterComparisonIsolate(
+//               filter: filter, food: food, loggedIn: loggedIn));
+//     } 
+
+// List<Food?> sortedList(FilterComparisonIsolate data) {
+//   final List<Food?> list =
+//       List.generate(data.food.length, (index) => data.food[index]);
+//   final List<Food?> listSoup = List.generate(
+//     data.food.length,
+//     (index) => data.food[index].type == "soup" ? data.food[index] : null,
+//   );
+//   final List<Food?> listSalad = List.generate(
+//     data.food.length,
+//     (index) => data.food[index].type == "salad" ? data.food[index] : null,
+//   );
+//   final List<Food?> listStarter = List.generate(
+//     data.food.length,
+//     (index) => data.food[index].type == "starter" ? data.food[index] : null,
+//   );
+
+//   switch (data.filter) {
+//     case "All":
+//       return list;
+//     case "Starters":
+//       listStarter.removeWhere((element) => element == null);
+//       return listStarter;
+//     case "Soups":
+//       listSoup.removeWhere((element) => element == null);
+//       return listSoup;
+//     case "Salads":
+//       listSalad.removeWhere((element) => element == null);
+//       return listSalad;
+//     default:
+//       throw "Something went wrong with sortedListIsolate";
+//   }
+// }
+ 

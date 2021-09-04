@@ -1,4 +1,3 @@
-import 'package:dinner_planner/models/user.dart';
 import 'package:dinner_planner/pages/authentication/sign_in.dart';
 import 'package:dinner_planner/pages/authentication/sign_in_method.dart';
 import 'package:dinner_planner/pages/authentication/sign_up.dart';
@@ -15,20 +14,26 @@ class Auth extends StatefulWidget {
 
 class _AuthState extends State<Auth> {
   var pageIndex = 0;
-  late PageController pageController = PageController(initialPage: pageIndex);
-  List<Widget> pages = [SignIn(), SignUp(), SignInAnonymously()];
+  late PageController pageController;
+  List<Widget> pages = [];
+
+  @override
+  void initState() {
+    super.initState();
+    pages = [SignIn(), SignUp(), SignInAnonymously()];
+    pageController = PageController(initialPage: pageIndex);
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final UserID? user = Provider.of<UserID?>(context);
     return GestureDetector(
-      onTap: () {
-        try {
-          FocusScope.of(context).unfocus();
-        } catch (e) {
-          return null;
-        }
-      },
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         appBar: AppBar(
           elevation: 0.0,
