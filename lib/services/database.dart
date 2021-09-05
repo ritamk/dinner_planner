@@ -110,7 +110,7 @@ class DatabaseService {
     });
   }
 
-  List _userActiveOrderHistory(DocumentSnapshot snapshot) {
+  List _userActiveOrders(DocumentSnapshot snapshot) {
     return snapshot.get("order");
   }
 
@@ -147,17 +147,6 @@ class DatabaseService {
     }).toList();
   }
 
-  FoodID _foodIDFromSnapshot(DocumentSnapshot snapshot) {
-    return FoodID(uid: foodId!);
-  }
-
-  Stream<FoodID> get foodID {
-    return menuCollectionReference
-        .doc(foodId)
-        .snapshots()
-        .map((DocumentSnapshot snapshot) => _foodIDFromSnapshot(snapshot));
-  }
-
   Stream<List<Food>> get food {
     return menuCollectionReference
         .orderBy("name")
@@ -181,6 +170,6 @@ class DatabaseService {
     return userCollectionReference
         .doc(uid)
         .snapshots()
-        .map((DocumentSnapshot snapshot) => _userActiveOrderHistory(snapshot));
+        .map((DocumentSnapshot snapshot) => _userActiveOrders(snapshot));
   }
 }

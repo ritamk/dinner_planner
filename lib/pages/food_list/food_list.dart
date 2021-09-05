@@ -1,5 +1,6 @@
 import 'package:dinner_planner/pages/food_list/filters/all.dart';
 import 'package:dinner_planner/pages/food_list/filters/salad.dart';
+import 'package:dinner_planner/pages/food_list/filters/sandwich.dart';
 import 'package:dinner_planner/pages/food_list/filters/soup.dart';
 import 'package:dinner_planner/pages/food_list/filters/starter.dart';
 import 'package:dinner_planner/services/filter_list_provider.dart';
@@ -26,10 +27,11 @@ class _FoodListState extends State<FoodList> {
           StarterFoodList(loggedIn: widget.loggedIn),
           SoupFoodList(loggedIn: widget.loggedIn),
           SaladFoodList(loggedIn: widget.loggedIn),
+          SandwichFoodList(loggedIn: widget.loggedIn),
         ];
 
         return PageView.builder(
-            itemCount: 4,
+            itemCount: 5,
             itemBuilder: (context, index) {
               return _pages[provider.filterIndex];
             },
