@@ -1,6 +1,4 @@
-import 'package:dinner_planner/models/order.dart';
 import 'package:dinner_planner/models/user.dart';
-import 'package:dinner_planner/pages/orders/cart_tile.dart';
 import 'package:dinner_planner/pages/orders/order_tile.dart';
 import 'package:dinner_planner/services/database.dart';
 import 'package:dinner_planner/services/order_list_provider.dart';
@@ -32,23 +30,24 @@ class Orders extends StatelessWidget {
                 initialData: [],
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
-                    // 0 - item, 1 - price, 2 - qty, 3 - name, 4 - time
+                    return snapshot.data.isNotEmpty
+                        ? ListView.builder(
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              // 0 - item, 1 - price, 2 - qty, 3 - name, 4 - time
+                              List<dynamic> field = snapshot.data[index].entries
+                                  .map((e) => e.value)
+                                  .toList();
 
-                    return ListView.builder(
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        List<dynamic> field = snapshot.data[index].entries
-                            .map((e) => e.value)
-                            .toList();
-
-                        return OrderTile(
-                            price: field[1],
-                            qty: field[2],
-                            name: field[3],
-                            time: field[4]);
-                      },
-                      physics: BouncingScrollPhysics(),
-                    );
+                              return OrderTile(
+                                  price: field[1],
+                                  qty: field[2],
+                                  name: field[3],
+                                  time: field[4]);
+                            },
+                            physics: BouncingScrollPhysics(),
+                          )
+                        : EmptyBody();
                   } else {
                     return Loading();
                   }

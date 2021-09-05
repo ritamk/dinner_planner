@@ -32,3 +32,28 @@ class EmptyPage extends StatelessWidget {
     );
   }
 }
+
+class EmptyBody extends StatelessWidget {
+  const EmptyBody({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          const Icon(Icons.remove_shopping_cart,
+              color: Colors.blue, size: 25.0),
+          const SizedBox(height: 40.0),
+          const Flexible(
+            child: Text(
+              "Wow, didn't expect this to be so empty.",
+              style: TextStyle(color: Colors.blue, fontSize: 15.0),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

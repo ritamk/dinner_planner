@@ -6,16 +6,22 @@ import 'package:dinner_planner/shared/empty.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Cart extends StatelessWidget {
+class Cart extends StatefulWidget {
   const Cart({Key? key}) : super(key: key);
 
+  @override
+  _CartState createState() => _CartState();
+}
+
+class _CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
     final UserID? userID = Provider.of<UserID?>(context);
 
     return Consumer<OrderListProvider>(builder: (context, provider, child) {
-      return userID != null
-          ? Scaffold(
+      return userID == null || provider.orderList.isEmpty
+          ? EmptyPage()
+          : Scaffold(
               appBar: AppBar(
                 leading: IconButton(
                   onPressed: () => Navigator.pop(context, "/"),
@@ -42,11 +48,18 @@ class Cart extends StatelessWidget {
                     provider.orderList.forEach((element) {
                       DatabaseService(uid: userID.uid)
                           .updateUserOrders(element);
+                    });
+                    setState(() {
                       provider.clearList();
                     });
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content:
                           Text("Order Confirmed!\nPlease go to Orders page."),
+                      action: SnackBarAction(
+                          label: "Active Orders",
+                          textColor: Colors.greenAccent,
+                          onPressed: () =>
+                              Navigator.pushNamed(context, "/orders")),
                     ));
                   } catch (e) {
                     print(e.toString());
@@ -91,8 +104,7 @@ class Cart extends StatelessWidget {
                   ),
                 ),
               ),
-            )
-          : EmptyPage();
+            );
     });
   }
 }
