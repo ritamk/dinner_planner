@@ -8,3 +8,9 @@ class OrderData {
 
   OrderData({required this.food, required this.qty, this.time});
 }
+
+class FetchOrderData {
+  final List? foodList;
+
+  FetchOrderData({this.foodList});
+}

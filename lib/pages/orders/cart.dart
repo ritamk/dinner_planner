@@ -1,5 +1,5 @@
 import 'package:dinner_planner/models/user.dart';
-import 'package:dinner_planner/pages/orders/order_tile.dart';
+import 'package:dinner_planner/pages/orders/cart_tile.dart';
 import 'package:dinner_planner/services/database.dart';
 import 'package:dinner_planner/services/order_list_provider.dart';
 import 'package:dinner_planner/shared/empty.dart';
@@ -26,7 +26,7 @@ class Cart extends StatelessWidget {
               body: ListView.builder(
                 itemCount: provider.orderList.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return OrderListTile(
+                  return CartListTile(
                       orderData: provider.orderList[index],
                       index: index,
                       userID: userID.uid);
@@ -42,6 +42,7 @@ class Cart extends StatelessWidget {
                     provider.orderList.forEach((element) {
                       DatabaseService(uid: userID.uid)
                           .updateUserOrders(element);
+                      provider.clearList();
                     });
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content:

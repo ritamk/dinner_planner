@@ -168,7 +168,7 @@ class _ProfileState extends State<Profile> {
                             pin: _pin,
                           ));
 
-                          result != null
+                          result != 1
                               ? ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
                                   content:
@@ -177,7 +177,7 @@ class _ProfileState extends State<Profile> {
                               : ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
                                   content: Text(
-                                      "Failed to update profile.\nPlease check network connection or try again later."),
+                                      "Failed to update profile.\nPlease check network connection and/or try again later."),
                                 ));
                         }
                       },

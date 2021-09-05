@@ -55,22 +55,17 @@ class DatabaseService {
   }
 
   Future updateUserOrders(OrderData data) async {
-    try {
-      return await userCollectionReference.doc(uid).update({
-        "order": FieldValue.arrayUnion([
-          {
-            "name": data.food.name,
-            "price": data.food.price,
-            "item": menuCollectionReference.doc(data.food.foodId),
-            "qty": data.qty,
-            "time": Timestamp.now(),
-          }
-        ])
-      });
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
+    return await userCollectionReference.doc(uid).update({
+      "order": FieldValue.arrayUnion([
+        {
+          "name": data.food.name,
+          "price": data.food.price,
+          "item": menuCollectionReference.doc(data.food.foodId),
+          "qty": data.qty,
+          "time": Timestamp.now(),
+        }
+      ])
+    });
   }
 
   Future removeUserOrders(OrderData data) async {
@@ -113,6 +108,10 @@ class DatabaseService {
         }
       ])
     });
+  }
+
+  List _userActiveOrderHistory(DocumentSnapshot snapshot) {
+    return snapshot.get("order");
   }
 
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
@@ -175,5 +174,12 @@ class DatabaseService {
   Stream<ExtendedUserData?> get extendedUserData {
     return userCollectionReference.doc(uid).snapshots().map(
         (DocumentSnapshot snapshot) => _extendedUserDataFromSnapshot(snapshot));
+  }
+
+  Stream get userActiveOrder {
+    return userCollectionReference
+        .doc(uid)
+        .snapshots()
+        .map((DocumentSnapshot snapshot) => _userActiveOrderHistory(snapshot));
   }
 }

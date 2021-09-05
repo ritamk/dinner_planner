@@ -2,7 +2,7 @@ import 'package:dinner_planner/models/user.dart';
 import 'package:dinner_planner/pages/authentication/auth.dart';
 import 'package:dinner_planner/pages/orders/cart.dart';
 import 'package:dinner_planner/pages/home/home.dart';
-import 'package:dinner_planner/pages/orders/orders.dart';
+import 'package:dinner_planner/pages/orders/active_orders.dart';
 import 'package:dinner_planner/pages/profile/profile.dart';
 import 'package:dinner_planner/pages/settings/setting.dart';
 import 'package:dinner_planner/services/authentication.dart';

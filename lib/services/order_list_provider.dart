@@ -26,6 +26,10 @@ class OrderListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void clearList() {
+    _orders.clear();
+  }
+
   int get price {
     int price = 0;
     _orders.forEach((element) {
