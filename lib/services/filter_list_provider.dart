@@ -6,6 +6,7 @@ class FilterListProvider with ChangeNotifier {
     "Starters",
     "Soups",
     "Salads",
+    "Sandwiches",
   ];
 
   int _num = 0;

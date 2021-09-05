@@ -160,6 +160,7 @@ class DatabaseService {
 
   Stream<List<Food>> get food {
     return menuCollectionReference
+        .orderBy("name")
         .snapshots()
         .map((QuerySnapshot snapshot) => _foodListFromSnapshot(snapshot));
   }
