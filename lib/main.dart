@@ -7,6 +7,7 @@ import 'package:dinner_planner/pages/profile/profile.dart';
 import 'package:dinner_planner/pages/settings/setting.dart';
 import 'package:dinner_planner/services/authentication.dart';
 import 'package:dinner_planner/services/filter_list_provider.dart';
+import 'package:dinner_planner/services/food_list_provider.dart';
 import 'package:dinner_planner/services/order_list_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,7 +22,8 @@ void main() async {
     StreamProvider<UserID?>.value(
         value: AuthenticationService().user, initialData: null),
     ChangeNotifierProvider(create: (context) => OrderListProvider()),
-    ChangeNotifierProvider(create: (context) => FilterListProvider())
+    ChangeNotifierProvider(create: (context) => FilterListProvider()),
+    ChangeNotifierProvider(create: (context) => FoodListProvider())
   ], child: MyApp()));
 }
 

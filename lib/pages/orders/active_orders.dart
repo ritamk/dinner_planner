@@ -47,7 +47,8 @@ class Orders extends StatelessWidget {
                             },
                             physics: BouncingScrollPhysics(),
                           )
-                        : EmptyBody();
+                        : EmptyBody(
+                            message: "Wow, didn't expect this to be so empty.");
                   } else {
                     return Loading();
                   }

@@ -166,6 +166,13 @@ class DatabaseService {
         (DocumentSnapshot snapshot) => _extendedUserDataFromSnapshot(snapshot));
   }
 
+  // Future<List> get userActiveOrder async {
+  //   QuerySnapshot snapshot =
+  //       await menuCollectionReference.orderBy("name").get();
+  //   List food = snapshot.docs;
+  //   return food;
+  // }
+
   Stream get userActiveOrder {
     return userCollectionReference
         .doc(uid)

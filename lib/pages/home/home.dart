@@ -5,8 +5,10 @@ import 'package:dinner_planner/pages/food_list/food_list.dart';
 import 'package:dinner_planner/pages/home/filter_togglebar.dart';
 import 'package:dinner_planner/pages/home/search_field.dart';
 import 'package:dinner_planner/services/database.dart';
-import 'package:dinner_planner/services/filter_list_provider.dart';
+import 'package:dinner_planner/services/food_list_provider.dart';
 import 'package:dinner_planner/services/order_list_provider.dart';
+import 'package:dinner_planner/shared/empty.dart';
+import 'package:dinner_planner/shared/loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -32,7 +34,9 @@ class Home extends StatelessWidget {
               tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
             );
           }),
-          title: SearchField(),
+          title: Consumer<FoodListProvider>(
+              builder: (context, provider, child) =>
+                  SearchField(foodListProvider: provider)),
           centerTitle: false,
           actions: <Widget>[
             Tooltip(
@@ -74,10 +78,28 @@ class Home extends StatelessWidget {
               preferredSize: Size(double.infinity, 100.0),
               child: FilterToggleButtonWidget()),
         ),
-        body: StreamProvider<List<Food>>.value(
-          value: DatabaseService().food,
+        body: StreamBuilder<List<Food>>(
+          stream: DatabaseService().food,
           initialData: [],
-          child: FoodList(loggedIn: loggedIn),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData) {
+              return Consumer<FoodListProvider>(
+                  builder: (context, provider, child) {
+                provider.addFood(snapshot.data);
+                return FoodList(
+                    loggedIn: loggedIn,
+                    food: provider.isOpen
+                        ? provider.getSearchedFoodList
+                        : provider.getFoodList);
+              });
+            } else if (snapshot.connectionState == ConnectionState.none) {
+              return EmptyBody(
+                  message:
+                      "Couldn't connect to the internet.\nPlease check your network connection.");
+            } else {
+              return Loading();
+            }
+          },
         ),
         drawer: HomeDrawer(
           loginWidget: ListTile(

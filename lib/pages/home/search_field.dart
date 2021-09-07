@@ -1,7 +1,10 @@
+import 'package:dinner_planner/services/food_list_provider.dart';
 import 'package:flutter/material.dart';
 
 class SearchField extends StatefulWidget {
-  const SearchField({Key? key}) : super(key: key);
+  const SearchField({Key? key, required this.foodListProvider})
+      : super(key: key);
+  final FoodListProvider foodListProvider;
 
   @override
   _SearchFieldState createState() => _SearchFieldState();
@@ -10,7 +13,7 @@ class SearchField extends StatefulWidget {
 class _SearchFieldState extends State<SearchField>
     with SingleTickerProviderStateMixin {
   final FocusNode _focusNode = FocusNode();
-  bool isOpen = false;
+  TextEditingController _textController = TextEditingController();
   late AnimationController _animationController;
   late Animation _animation;
 
@@ -19,8 +22,11 @@ class _SearchFieldState extends State<SearchField>
     super.initState();
     _animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 500));
-    _animation = Tween<double>(begin: 50, end: 700).animate(
+    _animation = Tween<double>(begin: 50.0, end: 700.0).animate(
         CurvedAnimation(parent: _animationController, curve: Curves.easeInOut));
+    _textController.addListener(() {
+      widget.foodListProvider.searchFood(_textController.text.toLowerCase());
+    });
   }
 
   @override
@@ -33,6 +39,8 @@ class _SearchFieldState extends State<SearchField>
           width: _animation.value,
           constraints: BoxConstraints(maxWidth: double.maxFinite),
           child: TextFormField(
+            controller: _textController,
+            cursorColor: Colors.white,
             focusNode: _focusNode,
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -41,26 +49,29 @@ class _SearchFieldState extends State<SearchField>
               hintText: "Search",
               hintStyle: TextStyle(fontSize: 18.0, color: Colors.white),
               enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50.0),
+                  borderRadius: BorderRadius.circular(25.0),
                   borderSide: BorderSide.none),
               focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50.0),
+                  borderRadius: BorderRadius.circular(25.0),
                   borderSide: BorderSide.none),
               prefixIcon: IconButton(
                 tooltip: "Search",
                 onPressed: () {
-                  setState(() {
-                    if (isOpen) {
+                  if (widget.foodListProvider.isOpen) {
+                    setState(() {
                       _animationController.reverse();
-                      _focusNode.unfocus();
-                    } else {
+                    });
+                    _focusNode.unfocus();
+                    _textController.clear();
+                  } else {
+                    setState(() {
                       _animationController.forward();
-                      _focusNode.requestFocus();
-                    }
-                    this.isOpen = !isOpen;
-                  });
+                    });
+                    _focusNode.requestFocus();
+                  }
+                  widget.foodListProvider.openClose();
                 },
-                icon: isOpen
+                icon: widget.foodListProvider.isOpen
                     ? Icon(Icons.close, color: Colors.white)
                     : Icon(Icons.search, color: Colors.white),
               ),

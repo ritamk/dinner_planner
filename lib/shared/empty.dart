@@ -34,7 +34,8 @@ class EmptyPage extends StatelessWidget {
 }
 
 class EmptyBody extends StatelessWidget {
-  const EmptyBody({Key? key}) : super(key: key);
+  const EmptyBody({Key? key, required this.message}) : super(key: key);
+  final String message;
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +44,11 @@ class EmptyBody extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          const Icon(Icons.remove_shopping_cart,
-              color: Colors.blue, size: 25.0),
+          const Icon(Icons.error, color: Colors.blue, size: 25.0),
           const SizedBox(height: 40.0),
-          const Flexible(
+          Flexible(
             child: Text(
-              "Wow, didn't expect this to be so empty.",
+              message,
               style: TextStyle(color: Colors.blue, fontSize: 15.0),
             ),
           ),

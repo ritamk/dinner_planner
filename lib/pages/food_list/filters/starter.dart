@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class StarterFoodList extends StatelessWidget {
-  const StarterFoodList({Key? key, required this.loggedIn}) : super(key: key);
+  const StarterFoodList({Key? key, required this.loggedIn, required this.food})
+      : super(key: key);
   final bool loggedIn;
+  final List<Food> food;
 
   @override
   Widget build(BuildContext context) {
-    final List<Food> food = Provider.of<List<Food>>(context);
-
     return food.isEmpty
         ? Loading()
         : ListView.builder(

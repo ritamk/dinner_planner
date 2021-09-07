@@ -209,3 +209,11 @@
 //         ? FoodTile(food: food, loggedIn: loggedIn, index: index)
 //         : const Padding(padding: EdgeInsets.all(0.0));
 //   } 
+
+
+// StreamProvider<List<Food>>.value(
+        //   lazy: true,
+        //   value: DatabaseService().food,
+        //   initialData: [],
+        //   child: FoodList(loggedIn: loggedIn),
+        // ),

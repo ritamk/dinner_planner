@@ -27,7 +27,7 @@ class DialogToLogin extends StatelessWidget {
               children: <Widget>[
                 Flexible(
                   child: Text(
-                    "Please log-in to user the add to cart function",
+                    "Please log-in to use the add-to-cart function",
                     textAlign: TextAlign.center,
                     style:
                         TextStyle(fontSize: 16.0, color: Colors.red.shade700),

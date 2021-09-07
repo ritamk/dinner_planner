@@ -27,7 +27,7 @@ class _ProfileState extends State<Profile> {
     final FocusNode _stateFocus = FocusNode();
 
     return userID != null
-        ? StreamBuilder(
+        ? StreamBuilder<ExtendedUserData?>(
             stream: DatabaseService(uid: userID.uid).extendedUserData,
             initialData: null,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
