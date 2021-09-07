@@ -13,7 +13,7 @@ class SearchField extends StatefulWidget {
 class _SearchFieldState extends State<SearchField>
     with SingleTickerProviderStateMixin {
   final FocusNode _focusNode = FocusNode();
-  TextEditingController _textController = TextEditingController();
+  late TextEditingController _textController;
   late AnimationController _animationController;
   late Animation _animation;
 
@@ -24,9 +24,7 @@ class _SearchFieldState extends State<SearchField>
         vsync: this, duration: const Duration(milliseconds: 500));
     _animation = Tween<double>(begin: 50.0, end: 700.0).animate(
         CurvedAnimation(parent: _animationController, curve: Curves.easeInOut));
-    _textController.addListener(() {
-      widget.foodListProvider.searchFood(_textController.text.toLowerCase());
-    });
+    _textController = TextEditingController();
   }
 
   @override
@@ -57,19 +55,22 @@ class _SearchFieldState extends State<SearchField>
               prefixIcon: IconButton(
                 tooltip: "Search",
                 onPressed: () {
+                  widget.foodListProvider.openClose();
                   if (widget.foodListProvider.isOpen) {
-                    setState(() {
-                      _animationController.reverse();
-                    });
-                    _focusNode.unfocus();
-                    _textController.clear();
-                  } else {
                     setState(() {
                       _animationController.forward();
                     });
                     _focusNode.requestFocus();
+                  } else {
+                    setState(() {
+                      _animationController.reverse();
+                    });
+                    widget.foodListProvider.searchClear();
+                    if (_focusNode.hasFocus) {
+                      _focusNode.unfocus();
+                    }
+                    _textController.clear();
                   }
-                  widget.foodListProvider.openClose();
                 },
                 icon: widget.foodListProvider.isOpen
                     ? Icon(Icons.close, color: Colors.white)
@@ -77,6 +78,8 @@ class _SearchFieldState extends State<SearchField>
               ),
             ),
             style: TextStyle(fontSize: 18.0, color: Colors.white),
+            onFieldSubmitted: (val) =>
+                widget.foodListProvider.searchFood(val.toLowerCase()),
             textInputAction: TextInputAction.search,
           ),
         );
@@ -86,6 +89,7 @@ class _SearchFieldState extends State<SearchField>
 
   @override
   void dispose() {
+    _textController.dispose();
     _animationController.dispose();
     super.dispose();
   }

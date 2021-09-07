@@ -24,7 +24,6 @@ class _FoodListState extends State<FoodList> {
   Widget build(BuildContext context) {
     return Consumer<FilterListProvider>(
       builder: (context, provider, child) {
-        final PageController _pageController = PageController();
         final List<Widget> _pages = [
           AllFoodList(loggedIn: widget.loggedIn, food: widget.food),
           StarterFoodList(loggedIn: widget.loggedIn, food: widget.food),
@@ -33,17 +32,15 @@ class _FoodListState extends State<FoodList> {
           SandwichFoodList(loggedIn: widget.loggedIn, food: widget.food),
         ];
 
-        return PageView.builder(
-            itemCount: 5,
-            itemBuilder: (context, index) {
-              return _pages[provider.filterIndex];
-            },
-            controller: _pageController,
-            onPageChanged: (num) {
-              setState(() {
-                provider.filterChange(num);
-              });
+        return PageView(
+          children: _pages,
+          controller: provider.pageController,
+          onPageChanged: (num) {
+            setState(() {
+              provider.filterChange(num);
             });
+          },
+        );
       },
     );
   }

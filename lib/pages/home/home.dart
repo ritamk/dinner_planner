@@ -78,29 +78,29 @@ class Home extends StatelessWidget {
               preferredSize: Size(double.infinity, 100.0),
               child: FilterToggleButtonWidget()),
         ),
-        body: StreamBuilder<List<Food>>(
-          stream: DatabaseService().food,
-          initialData: [],
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
-              return Consumer<FoodListProvider>(
-                  builder: (context, provider, child) {
+        body: Consumer<FoodListProvider>(builder: (context, provider, child) {
+          return StreamBuilder<List<Food>>(
+            stream: DatabaseService().food,
+            initialData: [],
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
                 provider.addFood(snapshot.data);
                 return FoodList(
-                    loggedIn: loggedIn,
-                    food: provider.isOpen
-                        ? provider.getSearchedFoodList
-                        : provider.getFoodList);
-              });
-            } else if (snapshot.connectionState == ConnectionState.none) {
-              return EmptyBody(
-                  message:
-                      "Couldn't connect to the internet.\nPlease check your network connection.");
-            } else {
-              return Loading();
-            }
-          },
-        ),
+                  loggedIn: loggedIn,
+                  food: provider.isOpen
+                      ? provider.getSearchedFoodList
+                      : provider.getFoodList,
+                );
+              } else if (snapshot.connectionState == ConnectionState.none) {
+                return EmptyBody(
+                    message:
+                        "Couldn't connect to the internet.\nPlease check your network connection.");
+              } else {
+                return Loading();
+              }
+            },
+          );
+        }),
         drawer: HomeDrawer(
           loginWidget: ListTile(
             contentPadding:

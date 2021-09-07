@@ -11,6 +11,8 @@ class FilterListProvider with ChangeNotifier {
 
   int _num = 0;
 
+  PageController _pageController = PageController();
+
   String get filteredString => _selectedFilter[_num];
 
   List<String> get filterList => _selectedFilter;
@@ -19,6 +21,10 @@ class FilterListProvider with ChangeNotifier {
 
   void filterChange(int num) {
     _num = num;
+    _pageController.animateToPage(num,
+        duration: Duration(milliseconds: 100), curve: Curves.easeIn);
     notifyListeners();
   }
+
+  PageController get pageController => _pageController;
 }

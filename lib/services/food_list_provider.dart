@@ -9,17 +9,23 @@ class FoodListProvider with ChangeNotifier {
 
   void addFood(List<Food> food) {
     _food = food;
+    // notifyListeners();
+  }
+
+  void openClose() {
+    _isOpen = !_isOpen;
     notifyListeners();
   }
 
   void searchFood(String word) {
     _searchedFood = _food;
-    _searchedFood.retainWhere((element) => element.name.contains(word));
+    _searchedFood
+        .retainWhere((element) => element.name.toLowerCase().contains(word));
     notifyListeners();
   }
 
-  void openClose() {
-    _isOpen = !_isOpen;
+  void searchClear() {
+    _searchedFood = _food;
     notifyListeners();
   }
 
