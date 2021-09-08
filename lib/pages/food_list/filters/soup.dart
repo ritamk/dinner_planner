@@ -3,7 +3,6 @@ import 'package:dinner_planner/pages/food_list/food_list_tile.dart';
 import 'package:dinner_planner/shared/loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class SoupFoodList extends StatelessWidget {
   const SoupFoodList({Key? key, required this.loggedIn, required this.food})

@@ -1,4 +1,5 @@
 import 'package:dinner_planner/services/food_list_provider.dart';
+import 'package:dinner_planner/shared/debouncer.dart';
 import 'package:flutter/material.dart';
 
 class SearchField extends StatefulWidget {
@@ -16,6 +17,7 @@ class _SearchFieldState extends State<SearchField>
   late TextEditingController _textController;
   late AnimationController _animationController;
   late Animation _animation;
+  final Debouncer _debouncer = Debouncer(milliseconds: 800);
 
   @override
   void initState() {
@@ -78,9 +80,9 @@ class _SearchFieldState extends State<SearchField>
               ),
             ),
             style: TextStyle(fontSize: 18.0, color: Colors.white),
-            onFieldSubmitted: (val) =>
-                widget.foodListProvider.searchFood(val.toLowerCase()),
             textInputAction: TextInputAction.search,
+            onChanged: (val) => _debouncer.run(
+                () => widget.foodListProvider.searchFood(val.toLowerCase())),
           ),
         );
       },

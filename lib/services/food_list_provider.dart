@@ -19,14 +19,15 @@ class FoodListProvider with ChangeNotifier {
 
   void searchFood(String word) {
     _searchedFood = _food;
-    _searchedFood
-        .retainWhere((element) => element.name.toLowerCase().contains(word));
-    notifyListeners();
+    if (word.isNotEmpty) {
+      _searchedFood
+          .retainWhere((element) => element.name.toLowerCase().contains(word));
+      notifyListeners();
+    }
   }
 
   void searchClear() {
-    _searchedFood = _food;
-    notifyListeners();
+    _searchedFood.clear();
   }
 
   List<Food> get getFoodList => _food;

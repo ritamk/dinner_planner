@@ -3,7 +3,6 @@ import 'package:dinner_planner/pages/authentication/sign_in_method.dart';
 import 'package:dinner_planner/pages/authentication/sign_up.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class Auth extends StatefulWidget {
   Auth({Key? key}) : super(key: key);
