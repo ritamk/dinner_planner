@@ -37,15 +37,16 @@ class MyApp extends StatelessWidget {
         appBarTheme: AppBarTheme(
             elevation: 0.0,
             centerTitle: true,
-            titleTextStyle:
-                TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
-            backgroundColor: Colors.white10,
+            titleTextStyle: TextStyle(
+                color: Colors.blue, fontSize: 20.0, fontFamily: "Montserrat"),
+            backgroundColor: Colors.white24,
             iconTheme: IconThemeData(color: Colors.blue)),
         primarySwatch: Colors.blue,
         pageTransitionsTheme: PageTransitionsTheme(builders: {
           TargetPlatform.android: CupertinoPageTransitionsBuilder(),
         }),
       ),
+      debugShowCheckedModeBanner: false,
       initialRoute: "/",
       routes: {
         "/": (context) => const Home(),

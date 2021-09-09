@@ -26,7 +26,7 @@ class Home extends StatelessWidget {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         appBar: AppBar(
-          toolbarHeight: 140.0,
+          toolbarHeight: 130.0,
           leading: Builder(builder: (context) {
             return IconButton(
               onPressed: () => Scaffold.of(context).openDrawer(),
@@ -75,7 +75,7 @@ class Home extends StatelessWidget {
             const SizedBox(width: 8.0),
           ],
           bottom: PreferredSize(
-              preferredSize: Size(double.infinity, 100.0),
+              preferredSize: Size(double.infinity, double.minPositive),
               child: FilterToggleButtonWidget()),
         ),
         body: Consumer<FoodListProvider>(builder: (context, provider, child) {
@@ -101,6 +101,7 @@ class Home extends StatelessWidget {
             },
           );
         }),
+        //
         drawer: HomeDrawer(
           loginWidget: ListTile(
             contentPadding:

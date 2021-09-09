@@ -73,9 +73,10 @@ class _FoodTileState extends State<FoodTile> with TickerProviderStateMixin {
               : _openClosecontroller.reverse(),
           leading: RotationTransition(
               turns: _openClose, child: const Icon(Icons.keyboard_arrow_down)),
-          title: Text("${widget.food.name}",
-              style:
-                  const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
+          title: Text(
+            "${widget.food.name}",
+            style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+          ),
           trailing: Consumer<OrderListProvider>(
             builder: (context, provider, child) {
               return IconButton(
@@ -121,8 +122,11 @@ class _FoodTileState extends State<FoodTile> with TickerProviderStateMixin {
                         fontSize: 16.0, fontFamily: "KaiseiHarunoUmi-Medium"),
                   ),
                 ),
-                Text("₹ ${widget.food.price.toString()}",
-                    style: TextStyle(fontSize: 18.0)),
+                Text(
+                  "₹ ${widget.food.price.toString()}",
+                  style: const TextStyle(
+                      fontSize: 18.0, fontFamily: "KaiseiHarunoUmi-Medium"),
+                ),
               ],
             ),
           ],

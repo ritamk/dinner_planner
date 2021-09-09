@@ -22,8 +22,7 @@ class Orders extends StatelessWidget {
                   onPressed: () => Navigator.pop(context, "/"),
                   icon: Icon(Icons.arrow_back_ios),
                 ),
-                title:
-                    Text("Active Orders", style: TextStyle(color: Colors.blue)),
+                title: Text("Active Orders"),
               ),
               body: StreamBuilder(
                 stream: DatabaseService(uid: userID.uid).userActiveOrder,

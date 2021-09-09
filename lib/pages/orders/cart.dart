@@ -3,7 +3,9 @@ import 'package:dinner_planner/pages/orders/cart_tile.dart';
 import 'package:dinner_planner/services/database.dart';
 import 'package:dinner_planner/services/order_list_provider.dart';
 import 'package:dinner_planner/shared/empty.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:provider/provider.dart';
 
 class Cart extends StatefulWidget {
@@ -27,7 +29,7 @@ class _CartState extends State<Cart> {
                   onPressed: () => Navigator.pop(context, "/"),
                   icon: Icon(Icons.arrow_back_ios),
                 ),
-                title: Text("Orders", style: TextStyle(color: Colors.blue)),
+                title: Text("Cart", style: TextStyle(color: Colors.blue)),
               ),
               body: ListView.builder(
                 itemCount: provider.orderList.length,
@@ -40,8 +42,8 @@ class _CartState extends State<Cart> {
                 physics: BouncingScrollPhysics(),
               ),
               floatingActionButtonLocation:
-                  FloatingActionButtonLocation.endDocked,
-              floatingActionButton: FloatingActionButton(
+                  FloatingActionButtonLocation.endFloat,
+              floatingActionButton: FloatingActionButton.extended(
                 tooltip: "Confirm Order",
                 onPressed: () {
                   try {
@@ -59,7 +61,7 @@ class _CartState extends State<Cart> {
                           label: "Active Orders",
                           textColor: Colors.greenAccent,
                           onPressed: () =>
-                              Navigator.pushNamed(context, "/orders")),
+                              Navigator.popAndPushNamed(context, "/orders")),
                     ));
                   } catch (e) {
                     print(e.toString());
@@ -69,23 +71,35 @@ class _CartState extends State<Cart> {
                     ));
                   }
                 },
-                child: Icon(Icons.check, color: Colors.white),
+                label: Row(
+                  children: const <Widget>[
+                    Icon(Icons.check, color: Colors.white),
+                    SizedBox(width: 8.0),
+                    Text("Confirm",
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                  ],
+                ),
               ),
               bottomNavigationBar: BottomAppBar(
                 color: Colors.lightBlue,
-                shape: CircularNotchedRectangle(),
+                // shape: CircularNotchedRectangle(),
                 elevation: 0.0,
                 child: Padding(
                   padding: const EdgeInsets.all(24.0),
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       const SizedBox(width: 16.0),
+                      const Icon(Icons.shopping_bag_outlined,
+                          color: Colors.white),
+                      const SizedBox(width: 6.0),
                       RichText(
                         text: TextSpan(
                           text: "Order total: ",
                           style: TextStyle(
+                              fontFamily: "Montserrat",
                               fontSize: 16.0,
                               fontWeight: FontWeight.bold,
                               color: Colors.white),
@@ -93,9 +107,10 @@ class _CartState extends State<Cart> {
                             TextSpan(
                               text: "₹ ${provider.price}",
                               style: TextStyle(
+                                  fontFamily: "Montserrat",
                                   fontSize: 16.0,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.white70),
+                                  color: Colors.white.withOpacity(0.9)),
                             ),
                           ],
                         ),

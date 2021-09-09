@@ -217,3 +217,22 @@
         //   initialData: [],
         //   child: FoodList(loggedIn: loggedIn),
         // ),
+
+
+
+        // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+// floatingActionButton: Row(
+//   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//   children: <Widget>[
+//     Consumer<OrderListProvider>(builder: (context, provider, child) {
+//       return FloatingActionButton(
+//           tooltip: "Cancel all",
+//           onPressed: () => provider.clearList(),
+//           child: Icon(Icons.close));
+//     }),
+//     FloatingActionButton(
+//         tooltip: "Go to cart",
+//         onPressed: () => Navigator.pushNamed(context, "/cart"),
+//         child: Icon(Icons.check)),
+//   ],
+// ),

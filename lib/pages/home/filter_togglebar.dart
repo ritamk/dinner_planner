@@ -54,10 +54,10 @@ class _FilterToggleButtonWidgetState extends State<FilterToggleButtonWidget>
     return Container(
       constraints: BoxConstraints(maxHeight: 100.0),
       margin: const EdgeInsets.symmetric(vertical: 4.0),
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
       decoration: BoxDecoration(
           color: selected == index ? Colors.blue : Colors.blue.shade50,
-          borderRadius: BorderRadius.circular(25.0)),
+          borderRadius: BorderRadius.circular(30.0)),
       child: Consumer<FilterListProvider>(
         builder: (context, provider, child) {
           return Text(

@@ -42,7 +42,7 @@ class HomeDrawer extends StatelessWidget {
                 ListTile(
                   contentPadding: _contentPadding,
                   leading: Icon(Icons.shopping_bag),
-                  title: Text("Orders", style: _titleStyle),
+                  title: Text("Active Orders", style: _titleStyle),
                   trailing: Icon(Icons.arrow_right),
                   onTap: () => Navigator.pushNamed(context, "/orders"),
                 ),
