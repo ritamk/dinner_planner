@@ -29,7 +29,7 @@ class _CartState extends State<Cart> {
                   onPressed: () => Navigator.pop(context, "/"),
                   icon: Icon(Icons.arrow_back_ios),
                 ),
-                title: Text("Cart", style: TextStyle(color: Colors.blue)),
+                title: Text("Cart"),
               ),
               body: ListView.builder(
                 itemCount: provider.orderList.length,

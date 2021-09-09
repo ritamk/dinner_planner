@@ -30,7 +30,7 @@ class _FilterToggleButtonWidgetState extends State<FilterToggleButtonWidget>
   Widget build(BuildContext context) {
     return Consumer<FilterListProvider>(builder: (context, provider, child) {
       return TabBar(
-        indicatorSize: TabBarIndicatorSize.label,
+        enableFeedback: false,
         onTap: (index) {
           setState(() {
             provider.filterChange(index);
@@ -38,7 +38,6 @@ class _FilterToggleButtonWidgetState extends State<FilterToggleButtonWidget>
         },
         isScrollable: true,
         controller: _tabController,
-        indicatorColor: Colors.transparent,
         tabs: <Widget>[
           tabs(0, provider.filterIndex),
           tabs(1, provider.filterIndex),
@@ -63,9 +62,7 @@ class _FilterToggleButtonWidgetState extends State<FilterToggleButtonWidget>
           return Text(
             provider.filterList[index],
             style: TextStyle(
-                color: selected == index ? Colors.white : Colors.blue,
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold),
+                color: selected == index ? Colors.white : Colors.blue),
           );
         },
       ),

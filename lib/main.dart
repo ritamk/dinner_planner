@@ -32,20 +32,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Restaurant',
-      theme: ThemeData(
-        fontFamily: "Montserrat",
-        appBarTheme: AppBarTheme(
-            elevation: 0.0,
-            centerTitle: true,
-            titleTextStyle: TextStyle(
-                color: Colors.blue, fontSize: 20.0, fontFamily: "Montserrat"),
-            backgroundColor: Colors.white24,
-            iconTheme: IconThemeData(color: Colors.blue)),
-        primarySwatch: Colors.blue,
-        pageTransitionsTheme: PageTransitionsTheme(builders: {
-          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-        }),
-      ),
+      theme: mainTheme(),
       debugShowCheckedModeBanner: false,
       initialRoute: "/",
       routes: {
@@ -58,4 +45,33 @@ class MyApp extends StatelessWidget {
       },
     );
   }
+}
+
+ThemeData mainTheme() {
+  return ThemeData(
+    fontFamily: "Montserrat",
+    tabBarTheme: const TabBarTheme(
+      labelStyle: TextStyle(
+          fontSize: 18.0,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Montserrat"),
+      unselectedLabelStyle: TextStyle(
+          fontSize: 18.0,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Montserrat"),
+      indicatorSize: TabBarIndicatorSize.label,
+      indicator: BoxDecoration(color: Colors.transparent),
+    ),
+    appBarTheme: const AppBarTheme(
+        elevation: 0.0,
+        centerTitle: true,
+        titleTextStyle: TextStyle(
+            color: Colors.blue, fontSize: 20.0, fontFamily: "Montserrat"),
+        backgroundColor: Colors.white24,
+        iconTheme: IconThemeData(color: Colors.blue)),
+    primarySwatch: Colors.blue,
+    pageTransitionsTheme: const PageTransitionsTheme(builders: {
+      TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+    }),
+  );
 }

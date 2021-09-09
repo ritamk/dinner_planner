@@ -53,8 +53,7 @@ class _ProfileState extends State<Profile> {
                         onPressed: () => Navigator.pop(context, "/"),
                         icon: Icon(Icons.arrow_back_ios),
                       ),
-                      title:
-                          Text("Profile", style: TextStyle(color: Colors.blue)),
+                      title: Text("Profile"),
                     ),
                     body: SingleChildScrollView(
                       padding: const EdgeInsets.all(16.0),
