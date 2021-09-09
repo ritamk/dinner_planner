@@ -106,7 +106,7 @@ class _FoodTileState extends State<FoodTile> with TickerProviderStateMixin {
             },
           ),
           children: <Widget>[
-            imagePlaceholder(width),
+            imagePlaceholder(width, widget.food.image),
             const SizedBox(height: 12.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -131,7 +131,7 @@ class _FoodTileState extends State<FoodTile> with TickerProviderStateMixin {
     );
   }
 
-  Stack imagePlaceholder(double width) {
+  Stack imagePlaceholder(double width, String food) {
     return Stack(
       alignment: Alignment.topLeft,
       children: <Widget>[
@@ -143,7 +143,8 @@ class _FoodTileState extends State<FoodTile> with TickerProviderStateMixin {
               bottomLeft: Radius.elliptical(width, 40.0),
               bottomRight: Radius.elliptical(width, 40.0),
             ),
-            color: Colors.red.shade50,
+            image:
+                DecorationImage(image: NetworkImage(food), fit: BoxFit.cover),
           ),
           height: 200.0,
           width: double.infinity,

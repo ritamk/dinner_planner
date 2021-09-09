@@ -143,7 +143,8 @@ class DatabaseService {
           veg: e.data()["veg"],
           type: e.data()["type"],
           foodId: e.data()["uid"],
-          about: e.data()["about"]);
+          about: e.data()["about"],
+          image: e.data()["image"]);
     }).toList();
   }
 

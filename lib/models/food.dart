@@ -11,6 +11,7 @@ class Food {
   final String type;
   final String foodId;
   final String about;
+  final String image;
 
   Food(
       {required this.name,
@@ -18,5 +19,6 @@ class Food {
       required this.veg,
       required this.type,
       required this.foodId,
-      required this.about});
+      required this.about,
+      required this.image});
 }
