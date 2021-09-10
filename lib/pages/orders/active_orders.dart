@@ -19,10 +19,11 @@ class Orders extends StatelessWidget {
           ? Scaffold(
               appBar: AppBar(
                 leading: IconButton(
-                  onPressed: () => Navigator.pop(context, "/"),
-                  icon: Icon(Icons.arrow_back_ios),
+                  onPressed: () =>
+                      Navigator.popUntil(context, ModalRoute.withName("/")),
+                  icon: const Icon(Icons.arrow_back_ios),
                 ),
-                title: Text("Active Orders"),
+                title: const Text("Active Orders"),
               ),
               body: StreamBuilder(
                 stream: DatabaseService(uid: userID.uid).userActiveOrder,
@@ -44,17 +45,17 @@ class Orders extends StatelessWidget {
                                   name: field[3],
                                   time: field[4]);
                             },
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                           )
-                        : EmptyBody(
+                        : const EmptyBody(
                             message: "Wow, didn't expect this to be so empty.");
                   } else {
-                    return Loading();
+                    return const Loading();
                   }
                 },
               ),
             )
-          : EmptyPage();
+          : const EmptyPage();
     });
   }
 }

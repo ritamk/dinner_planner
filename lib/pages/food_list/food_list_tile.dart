@@ -56,7 +56,8 @@ class _FoodTileState extends State<FoodTile> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width / 2.0;
+    final double width = MediaQuery.of(context).size.width / 2.0;
+    final double maxWidth = width / 0.8;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
@@ -107,7 +108,8 @@ class _FoodTileState extends State<FoodTile> with TickerProviderStateMixin {
             },
           ),
           children: <Widget>[
-            imagePlaceholder(width, widget.food.image),
+            ImagePlaceholderWidget(
+                width: width, food: widget.food.image, veg: widget.food.veg),
             const SizedBox(height: 12.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -115,7 +117,7 @@ class _FoodTileState extends State<FoodTile> with TickerProviderStateMixin {
               textDirection: TextDirection.ltr,
               children: <Widget>[
                 Container(
-                  constraints: BoxConstraints(maxWidth: width / 0.8),
+                  constraints: BoxConstraints(maxWidth: maxWidth),
                   child: Text(
                     "${widget.food.about}",
                     style: const TextStyle(
@@ -134,8 +136,18 @@ class _FoodTileState extends State<FoodTile> with TickerProviderStateMixin {
       ),
     );
   }
+}
 
-  Stack imagePlaceholder(double width, String food) {
+class ImagePlaceholderWidget extends StatelessWidget {
+  const ImagePlaceholderWidget(
+      {Key? key, required this.width, required this.food, required this.veg})
+      : super(key: key);
+  final double width;
+  final String food;
+  final bool veg;
+
+  @override
+  Widget build(BuildContext context) {
     return Stack(
       alignment: Alignment.topLeft,
       children: <Widget>[
@@ -161,8 +173,7 @@ class _FoodTileState extends State<FoodTile> with TickerProviderStateMixin {
             children: <Widget>[
               const Icon(Icons.circle, color: Colors.white, size: 30.0),
               Icon(Icons.radio_button_checked,
-                  color: widget.food.veg ? Colors.green : Colors.red,
-                  size: 22.0),
+                  color: veg ? Colors.green : Colors.red, size: 22.0),
             ],
           ),
         ),

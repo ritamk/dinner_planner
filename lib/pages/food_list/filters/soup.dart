@@ -20,7 +20,7 @@ class SoupFoodList extends StatelessWidget {
               return food[index].type == "soup"
                   ? FoodTile(
                       food: food[index], loggedIn: loggedIn, index: index)
-                  : const Padding(padding: EdgeInsets.all(0.0));
+                  : const SizedBox.shrink();
             },
             scrollDirection: Axis.vertical,
             physics: const BouncingScrollPhysics(),

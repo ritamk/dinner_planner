@@ -19,7 +19,7 @@ class CartListTile extends StatelessWidget {
     final Color vegColor = orderData.food.veg ? Colors.green : Colors.red;
 
     return Padding(
-      padding: EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8.0),
       child: OrderTileStatefulWidget(
           orderData: orderData, vegColor: vegColor, index: index, uid: userID),
     );
@@ -60,13 +60,13 @@ class _OrderTileStatefulWidgetState extends State<OrderTileStatefulWidget> {
             IconButton(
                 onPressed: () =>
                     provider.removeQty(widget.orderData, widget.index),
-                icon: Icon(Icons.remove_circle, size: 18.0)),
+                icon: const Icon(Icons.remove_circle, size: 18.0)),
             Text("${provider.orderList[widget.index].qty}",
-                style: TextStyle(fontSize: 17.0)),
+                style: const TextStyle(fontSize: 17.0)),
             IconButton(
                 onPressed: () =>
                     provider.addQty(widget.orderData, widget.index),
-                icon: Icon(Icons.add_circle, size: 18.0)),
+                icon: const Icon(Icons.add_circle, size: 18.0)),
           ],
         ),
         title: Text(widget.orderData.food.name,
@@ -77,7 +77,7 @@ class _OrderTileStatefulWidgetState extends State<OrderTileStatefulWidget> {
         subtitle: Text("₹ ${widget.orderData.food.price.toString()}"),
         trailing: IconButton(
             onPressed: () => provider.removeOrder(widget.orderData.food.name),
-            icon: Icon(Icons.delete)),
+            icon: const Icon(Icons.delete)),
       );
     });
   }

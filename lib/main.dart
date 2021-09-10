@@ -51,16 +51,16 @@ ThemeData mainTheme() {
   return ThemeData(
     fontFamily: "Montserrat",
     tabBarTheme: const TabBarTheme(
-      labelStyle: TextStyle(
+      labelStyle: const TextStyle(
           fontSize: 18.0,
           fontWeight: FontWeight.bold,
           fontFamily: "Montserrat"),
-      unselectedLabelStyle: TextStyle(
+      unselectedLabelStyle: const TextStyle(
           fontSize: 18.0,
           fontWeight: FontWeight.bold,
           fontFamily: "Montserrat"),
       indicatorSize: TabBarIndicatorSize.label,
-      indicator: BoxDecoration(color: Colors.transparent),
+      indicator: const BoxDecoration(color: Colors.transparent),
     ),
     appBarTheme: const AppBarTheme(
         elevation: 0.0,
@@ -68,7 +68,7 @@ ThemeData mainTheme() {
         titleTextStyle: TextStyle(
             color: Colors.blue, fontSize: 20.0, fontFamily: "Montserrat"),
         backgroundColor: Colors.white24,
-        iconTheme: IconThemeData(color: Colors.blue)),
+        iconTheme: const IconThemeData(color: Colors.blue)),
     primarySwatch: Colors.blue,
     pageTransitionsTheme: const PageTransitionsTheme(builders: {
       TargetPlatform.android: CupertinoPageTransitionsBuilder(),

@@ -37,7 +37,7 @@ class _SearchFieldState extends State<SearchField>
         return Container(
           height: 50.0,
           width: _animation.value,
-          constraints: BoxConstraints(maxWidth: double.maxFinite),
+          constraints: const BoxConstraints(maxWidth: double.maxFinite),
           child: TextFormField(
             controller: _textController,
             cursorColor: Colors.white,
@@ -47,7 +47,7 @@ class _SearchFieldState extends State<SearchField>
               fillColor: Colors.blue,
               filled: true,
               hintText: "Search",
-              hintStyle: TextStyle(fontSize: 18.0, color: Colors.white),
+              hintStyle: const TextStyle(fontSize: 18.0, color: Colors.white),
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25.0),
                   borderSide: BorderSide.none),
@@ -75,11 +75,11 @@ class _SearchFieldState extends State<SearchField>
                   }
                 },
                 icon: widget.foodListProvider.isOpen
-                    ? Icon(Icons.close, color: Colors.white)
-                    : Icon(Icons.search, color: Colors.white),
+                    ? const Icon(Icons.close, color: Colors.white)
+                    : const Icon(Icons.search, color: Colors.white),
               ),
             ),
-            style: TextStyle(fontSize: 18.0, color: Colors.white),
+            style: const TextStyle(fontSize: 18.0, color: Colors.white),
             textInputAction: TextInputAction.search,
             onChanged: (val) => _debouncer.run(
                 () => widget.foodListProvider.searchFood(val.toLowerCase())),

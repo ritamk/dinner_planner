@@ -51,9 +51,9 @@ class _ProfileState extends State<Profile> {
                     appBar: AppBar(
                       leading: IconButton(
                         onPressed: () => Navigator.pop(context, "/"),
-                        icon: Icon(Icons.arrow_back_ios),
+                        icon: const Icon(Icons.arrow_back_ios),
                       ),
-                      title: Text("Profile"),
+                      title: const Text("Profile"),
                     ),
                     body: SingleChildScrollView(
                       padding: const EdgeInsets.all(16.0),
@@ -62,7 +62,7 @@ class _ProfileState extends State<Profile> {
                         child: Column(
                           children: <Widget>[
                             TextFormField(
-                              style: TextStyle(fontSize: 18.0),
+                              style: const TextStyle(fontSize: 18.0),
                               focusNode: _nameFocus,
                               initialValue: snapshot.data.name,
                               decoration: profileInputDecoration()
@@ -74,7 +74,7 @@ class _ProfileState extends State<Profile> {
                             ),
                             const Divider(),
                             TextFormField(
-                              style: TextStyle(fontSize: 18.0),
+                              style: const TextStyle(fontSize: 18.0),
                               focusNode: _phoneFocus,
                               initialValue: snapshot.data.phone,
                               decoration: profileInputDecoration().copyWith(
@@ -91,7 +91,7 @@ class _ProfileState extends State<Profile> {
                               child: Text("Address:"),
                             ),
                             TextFormField(
-                              style: TextStyle(fontSize: 18.0),
+                              style: const TextStyle(fontSize: 18.0),
                               focusNode: _landmarkFocus,
                               initialValue: location[4].value,
                               decoration: profileInputDecoration()
@@ -100,7 +100,7 @@ class _ProfileState extends State<Profile> {
                             ),
                             const Divider(),
                             TextFormField(
-                              style: TextStyle(fontSize: 18.0),
+                              style: const TextStyle(fontSize: 18.0),
                               focusNode: _adLineFocus,
                               initialValue: location[3].value,
                               decoration: profileInputDecoration()
@@ -112,7 +112,7 @@ class _ProfileState extends State<Profile> {
                             ),
                             const Divider(),
                             TextFormField(
-                              style: TextStyle(fontSize: 18.0),
+                              style: const TextStyle(fontSize: 18.0),
                               focusNode: _cityFocus,
                               initialValue: location[1].value,
                               decoration: profileInputDecoration()
@@ -124,7 +124,7 @@ class _ProfileState extends State<Profile> {
                             ),
                             const Divider(),
                             TextFormField(
-                              style: TextStyle(fontSize: 18.0),
+                              style: const TextStyle(fontSize: 18.0),
                               focusNode: _stateFocus,
                               initialValue: location[2].value,
                               decoration: profileInputDecoration()
@@ -136,7 +136,7 @@ class _ProfileState extends State<Profile> {
                             ),
                             const Divider(),
                             TextFormField(
-                              style: TextStyle(fontSize: 18.0),
+                              style: const TextStyle(fontSize: 18.0),
                               focusNode: _pinFocus,
                               initialValue: location[0].value,
                               decoration: profileInputDecoration()
@@ -152,7 +152,7 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     floatingActionButton: FloatingActionButton(
-                      child: Icon(Icons.check),
+                      child: const Icon(Icons.check),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           dynamic result =
@@ -170,12 +170,12 @@ class _ProfileState extends State<Profile> {
                           result != 1
                               ? ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
-                                  content:
-                                      Text("Profile updated successfully."),
+                                  content: const Text(
+                                      "Profile updated successfully."),
                                 ))
                               : ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
-                                  content: Text(
+                                  content: const Text(
                                       "Failed to update profile.\nPlease check network connection and/or try again later."),
                                 ));
                         }
@@ -184,9 +184,9 @@ class _ProfileState extends State<Profile> {
                   ),
                 );
               } else {
-                return Loading();
+                return const Loading();
               }
             })
-        : NotLoggedIn();
+        : const NotLoggedIn();
   }
 }

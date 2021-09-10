@@ -35,21 +35,21 @@ class OrderTile extends StatelessWidget {
               children: <InlineSpan>[
                 TextSpan(
                     text: "₹ ${price.toString()}",
-                    style: TextStyle(color: Colors.black54)),
+                    style: const TextStyle(color: Colors.black54)),
                 TextSpan(
                     text: "\t\t\t•\t\t\t",
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontWeight: FontWeight.bold, color: Colors.black87)),
                 TextSpan(
                     text: "${qty.toString()} unit",
-                    style: TextStyle(color: Colors.black54)),
+                    style: const TextStyle(color: Colors.black54)),
               ],
             ),
           ),
           trailing: RichText(
             textAlign: TextAlign.right,
             text: TextSpan(
-              style: TextStyle(color: Colors.black54),
+              style: const TextStyle(color: Colors.black54),
               children: <InlineSpan>[
                 TextSpan(text: "${time.toDate().day}/"),
                 TextSpan(text: "${time.toDate().month}/"),

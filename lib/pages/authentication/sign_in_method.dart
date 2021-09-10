@@ -37,12 +37,12 @@ class _SignInAnonymouslyState extends State<SignInAnonymously> {
                         : setState(() {
                             loading = false;
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(
+                              content: const Text(
                                   "Couldn't sign-in, try again later.\nPlease check credentials and/or network connection."),
                             ));
                           });
                   },
-                  child: Text(
+                  child: const Text(
                     "Sign In Anonymously",
                     style: TextStyle(
                         color: Colors.white,

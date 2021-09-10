@@ -44,7 +44,7 @@ class _SignInState extends State<SignIn> {
                               val!.isEmpty ? "Enter your email" : null,
                           onChanged: (val) => mail = val,
                           decoration: authInputDecoration().copyWith(
-                            prefixIcon: Icon(Icons.person),
+                            prefixIcon: const Icon(Icons.person),
                             labelText: "Email",
                           ),
                           textInputAction: TextInputAction.next,
@@ -65,7 +65,7 @@ class _SignInState extends State<SignIn> {
                           onChanged: (val) => pass = val,
                           obscureText: _hidePassword,
                           decoration: authInputDecoration().copyWith(
-                            prefixIcon: Icon(Icons.vpn_key),
+                            prefixIcon: const Icon(Icons.vpn_key),
                             suffixIcon: IconButton(
                               onPressed: () {
                                 setState(() {
@@ -73,8 +73,8 @@ class _SignInState extends State<SignIn> {
                                 });
                               },
                               icon: (_hidePassword)
-                                  ? Icon(Icons.visibility)
-                                  : Icon(Icons.visibility_off),
+                                  ? const Icon(Icons.visibility)
+                                  : const Icon(Icons.visibility_off),
                             ),
                             labelText: "Password",
                           ),
@@ -95,13 +95,13 @@ class _SignInState extends State<SignIn> {
                                     loading = false;
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(SnackBar(
-                                      content: Text(
+                                      content: const Text(
                                           "Couldn't sign-in, try again later.\nPlease check credentials and/or network connection."),
                                     ));
                                   });
                           }
                         },
-                        child: Text(
+                        child: const Text(
                           "Sign In",
                           style: TextStyle(
                               color: Colors.white,

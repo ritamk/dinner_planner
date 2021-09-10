@@ -39,19 +39,27 @@ class _FilterToggleButtonWidgetState extends State<FilterToggleButtonWidget>
         isScrollable: true,
         controller: _tabController,
         tabs: <Widget>[
-          tabs(0, provider.filterIndex),
-          tabs(1, provider.filterIndex),
-          tabs(2, provider.filterIndex),
-          tabs(3, provider.filterIndex),
-          tabs(4, provider.filterIndex),
+          TabsWidget(index: 0, selected: provider.filterIndex),
+          TabsWidget(index: 1, selected: provider.filterIndex),
+          TabsWidget(index: 2, selected: provider.filterIndex),
+          TabsWidget(index: 3, selected: provider.filterIndex),
+          TabsWidget(index: 4, selected: provider.filterIndex),
         ],
       );
     });
   }
+}
 
-  Container tabs(int index, int selected) {
+class TabsWidget extends StatelessWidget {
+  const TabsWidget({Key? key, required this.index, required this.selected})
+      : super(key: key);
+  final int index;
+  final int selected;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(maxHeight: 100.0),
+      constraints: const BoxConstraints(maxHeight: 100.0),
       margin: const EdgeInsets.symmetric(vertical: 4.0),
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
       decoration: BoxDecoration(

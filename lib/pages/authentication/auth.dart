@@ -12,14 +12,18 @@ class Auth extends StatefulWidget {
 }
 
 class _AuthState extends State<Auth> {
-  var pageIndex = 0;
+  int pageIndex = 0;
   late PageController pageController;
   List<Widget> pages = [];
 
   @override
   void initState() {
     super.initState();
-    pages = [SignIn(), SignUp(), SignInAnonymously()];
+    pages = [
+      SignIn(),
+      SignUp(),
+      SignInAnonymously(),
+    ];
     pageController = PageController(initialPage: pageIndex);
   }
 
@@ -39,7 +43,7 @@ class _AuthState extends State<Auth> {
           backgroundColor: Colors.white10,
           leading: IconButton(
             onPressed: () => Navigator.pop(context, "/"),
-            icon: Icon(
+            icon: const Icon(
               Icons.home,
               color: Colors.blue,
             ),
@@ -56,7 +60,8 @@ class _AuthState extends State<Auth> {
             Padding(
               padding: const EdgeInsets.only(bottom: 16.0),
               child: BottomNavigationBar(
-                selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+                selectedLabelStyle:
+                    const TextStyle(fontWeight: FontWeight.bold),
                 selectedFontSize: 18.0,
                 unselectedFontSize: 15.0,
                 currentIndex: pageIndex,
@@ -65,15 +70,15 @@ class _AuthState extends State<Auth> {
                 items: <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
                     label: "Sign In",
-                    icon: Icon(Icons.person_outline),
+                    icon: const Icon(Icons.person_outline),
                   ),
                   BottomNavigationBarItem(
                     label: "Sign Up",
-                    icon: Icon(Icons.person_add_alt),
+                    icon: const Icon(Icons.person_add_alt),
                   ),
                   BottomNavigationBarItem(
-                    label: "Sign In Methods",
-                    icon: Icon(Icons.face_outlined),
+                    label: "Others",
+                    icon: const Icon(Icons.face_outlined),
                   ),
                 ],
               ),
@@ -94,7 +99,7 @@ class _AuthState extends State<Auth> {
     setState(() {
       pageIndex = index;
       pageController.animateToPage(index,
-          duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+          duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
     });
   }
 }

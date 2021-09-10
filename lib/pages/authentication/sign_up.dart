@@ -26,7 +26,7 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return loading
-        ? Loading()
+        ? const Loading()
         : Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Center(
@@ -45,7 +45,7 @@ class _SignUpState extends State<SignUp> {
                               val!.isEmpty ? "Enter a name" : null,
                           onChanged: (val) => username = val,
                           decoration: authInputDecoration().copyWith(
-                            prefixIcon: Icon(Icons.person),
+                            prefixIcon: const Icon(Icons.person),
                             labelText: "Name",
                           ),
                           textInputAction: TextInputAction.next,
@@ -63,7 +63,7 @@ class _SignUpState extends State<SignUp> {
                               val!.isEmpty ? "Enter an email" : null,
                           onChanged: (val) => mail = val,
                           decoration: authInputDecoration().copyWith(
-                            prefixIcon: Icon(Icons.mail),
+                            prefixIcon: const Icon(Icons.mail),
                             labelText: "Email",
                           ),
                           textInputAction: TextInputAction.next,
@@ -83,7 +83,7 @@ class _SignUpState extends State<SignUp> {
                           onChanged: (val) => pass = val,
                           obscureText: _hidePassword,
                           decoration: authInputDecoration().copyWith(
-                            prefixIcon: Icon(Icons.vpn_key),
+                            prefixIcon: const Icon(Icons.vpn_key),
                             suffixIcon: IconButton(
                               onPressed: () {
                                 setState(() {
@@ -91,8 +91,8 @@ class _SignUpState extends State<SignUp> {
                                 });
                               },
                               icon: (_hidePassword)
-                                  ? Icon(Icons.visibility)
-                                  : Icon(Icons.visibility_off),
+                                  ? const Icon(Icons.visibility)
+                                  : const Icon(Icons.visibility_off),
                             ),
                             labelText: "Password",
                           ),
@@ -113,13 +113,13 @@ class _SignUpState extends State<SignUp> {
                                     loading = false;
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(SnackBar(
-                                      content: Text(
+                                      content: const Text(
                                           "Couldn't sign-up, try again later.\nPlease check credentials and/or network connection."),
                                     ));
                                   });
                           }
                         },
-                        child: Text(
+                        child: const Text(
                           "Sign Up",
                           style: TextStyle(
                               color: Colors.white,

@@ -22,14 +22,14 @@ class _CartState extends State<Cart> {
 
     return Consumer<OrderListProvider>(builder: (context, provider, child) {
       return userID == null || provider.orderList.isEmpty
-          ? EmptyPage()
+          ? const EmptyPage()
           : Scaffold(
               appBar: AppBar(
                 leading: IconButton(
                   onPressed: () => Navigator.pop(context, "/"),
-                  icon: Icon(Icons.arrow_back_ios),
+                  icon: const Icon(Icons.arrow_back_ios),
                 ),
-                title: Text("Cart"),
+                title: const Text("Cart"),
               ),
               body: ListView.builder(
                 itemCount: provider.orderList.length,
@@ -39,7 +39,7 @@ class _CartState extends State<Cart> {
                       index: index,
                       userID: userID.uid);
                 },
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
               ),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.endFloat,
@@ -55,8 +55,8 @@ class _CartState extends State<Cart> {
                       provider.clearList();
                     });
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content:
-                          Text("Order Confirmed!\nPlease go to Orders page."),
+                      content: const Text(
+                          "Order Confirmed!\nPlease go to Orders page."),
                       action: SnackBarAction(
                           label: "Active Orders",
                           textColor: Colors.greenAccent,
@@ -66,7 +66,7 @@ class _CartState extends State<Cart> {
                   } catch (e) {
                     print(e.toString());
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(
+                      content: const Text(
                           "Couldn't place order.\nPlease try again later."),
                     ));
                   }
@@ -98,7 +98,7 @@ class _CartState extends State<Cart> {
                       RichText(
                         text: TextSpan(
                           text: "Order total: ",
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontFamily: "Montserrat",
                               fontSize: 16.0,
                               fontWeight: FontWeight.bold,
@@ -110,7 +110,7 @@ class _CartState extends State<Cart> {
                                   fontFamily: "Montserrat",
                                   fontSize: 16.0,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.white.withOpacity(0.9)),
+                                  color: Colors.white.withOpacity(0.8)),
                             ),
                           ],
                         ),

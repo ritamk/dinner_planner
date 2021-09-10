@@ -50,16 +50,16 @@ class Home extends StatelessWidget {
                   return Stack(
                     alignment: Alignment.topRight,
                     children: <Widget>[
-                      Icon(Icons.shopping_cart, color: Colors.blue),
+                      const Icon(Icons.shopping_cart, color: Colors.blue),
                       provider.orderList.isEmpty
                           ? const Padding(padding: EdgeInsets.all(0.0))
                           : Stack(
                               alignment: Alignment.center,
                               children: <Icon>[
-                                Icon(Icons.circle,
+                                const Icon(Icons.circle,
                                     color: Colors.white, size: 14.0),
                                 Icon(Icons.circle,
-                                    color: Colors.red[700], size: 10.0),
+                                    color: Colors.red.shade700, size: 10.0),
                               ],
                             ),
                     ],
@@ -74,7 +74,7 @@ class Home extends StatelessWidget {
             ),
             const SizedBox(width: 8.0),
           ],
-          bottom: PreferredSize(
+          bottom: const PreferredSize(
               preferredSize: Size(double.infinity, double.minPositive),
               child: FilterToggleButtonWidget()),
         ),
@@ -86,29 +86,27 @@ class Home extends StatelessWidget {
               if (snapshot.hasData) {
                 provider.addFood(snapshot.data);
                 return FoodList(
-                  loggedIn: loggedIn,
-                  food: provider.isOpen
-                      ? provider.getSearchedFoodList
-                      : provider.getFoodList,
-                );
+                    loggedIn: loggedIn,
+                    food: provider.isOpen
+                        ? provider.getSearchedFoodList
+                        : provider.getFoodList);
               } else if (snapshot.connectionState == ConnectionState.none) {
-                return EmptyBody(
+                return const EmptyBody(
                     message:
                         "Couldn't connect to the internet.\nPlease check your network connection.");
               } else {
-                return Loading();
+                return const Loading();
               }
             },
           );
         }),
-        //
         drawer: HomeDrawer(
           loginWidget: ListTile(
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0),
-            leading: Icon(Icons.login_rounded),
-            title: Text("Log In", style: TextStyle(fontSize: 16.0)),
-            trailing: Icon(Icons.arrow_right),
+            leading: const Icon(Icons.login_rounded),
+            title: const Text("Log In", style: TextStyle(fontSize: 16.0)),
+            trailing: const Icon(Icons.arrow_right),
             onTap: () => Navigator.pushNamed(context, "/auth"),
           ),
         ),

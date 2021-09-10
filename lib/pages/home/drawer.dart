@@ -13,9 +13,9 @@ class HomeDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final UserID? userID = Provider.of<UserID?>(context);
-    final EdgeInsetsGeometry _contentPadding =
+    const EdgeInsetsGeometry _contentPadding =
         const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0);
-    final TextStyle _titleStyle = TextStyle(fontSize: 16.0);
+    const TextStyle _titleStyle = TextStyle(fontSize: 16.0);
 
     return Drawer(
       child: Column(
@@ -32,18 +32,18 @@ class HomeDrawer extends StatelessWidget {
                     }),
                 ListTile(
                   contentPadding: _contentPadding,
-                  leading: Icon(Icons.person),
-                  title: Text("Profile", style: _titleStyle),
-                  trailing: Icon(Icons.arrow_right),
+                  leading: const Icon(Icons.person),
+                  title: const Text("Profile", style: _titleStyle),
+                  trailing: const Icon(Icons.arrow_right),
                   onTap: () {
                     Navigator.pushNamed(context, "/profile");
                   },
                 ),
                 ListTile(
                   contentPadding: _contentPadding,
-                  leading: Icon(Icons.shopping_bag),
-                  title: Text("Active Orders", style: _titleStyle),
-                  trailing: Icon(Icons.arrow_right),
+                  leading: const Icon(Icons.shopping_bag),
+                  title: const Text("Active Orders", style: _titleStyle),
+                  trailing: const Icon(Icons.arrow_right),
                   onTap: () => Navigator.pushNamed(context, "/orders"),
                 ),
               ],
@@ -58,9 +58,9 @@ class HomeDrawer extends StatelessWidget {
                     const Divider(),
                     ListTile(
                       contentPadding: _contentPadding,
-                      leading: Icon(Icons.settings),
-                      title: Text("Settings", style: _titleStyle),
-                      trailing: Icon(Icons.arrow_right),
+                      leading: const Icon(Icons.settings),
+                      title: const Text("Settings", style: _titleStyle),
+                      trailing: const Icon(Icons.arrow_right),
                       onTap: () {
                         Navigator.pushNamed(context, "/settings");
                       },
@@ -68,9 +68,9 @@ class HomeDrawer extends StatelessWidget {
                     userID != null
                         ? ListTile(
                             contentPadding: _contentPadding,
-                            leading: Icon(Icons.logout_rounded),
-                            title: Text("Log Out", style: _titleStyle),
-                            trailing: Icon(Icons.arrow_right),
+                            leading: const Icon(Icons.logout_rounded),
+                            title: const Text("Log Out", style: _titleStyle),
+                            trailing: const Icon(Icons.arrow_right),
                             onTap: () {
                               AuthenticationService().signOut();
                             },
@@ -78,9 +78,9 @@ class HomeDrawer extends StatelessWidget {
                         : loginWidget,
                     ListTile(
                       contentPadding: _contentPadding,
-                      leading: Icon(Icons.power_settings_new_rounded),
-                      title: Text("Exit", style: _titleStyle),
-                      trailing: Icon(Icons.arrow_right),
+                      leading: const Icon(Icons.power_settings_new_rounded),
+                      title: const Text("Exit", style: _titleStyle),
+                      trailing: const Icon(Icons.arrow_right),
                       onTap: () => SystemNavigator.pop(),
                     ),
                   ],
@@ -104,7 +104,7 @@ class DrawerHeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final CircleAvatar image =
         CircleAvatar(radius: 35.0, foregroundImage: NetworkImage(pic));
-    String userName = name;
+    final String userName = name;
     return DrawerHeader(
       child: Column(
         children: <Widget>[
@@ -126,17 +126,19 @@ class DrawerHeaderWidget extends StatelessWidget {
                   radius: 40.0,
                 ),
                 pic.isEmpty
-                    ? Icon(Icons.face, size: 80.0, color: Colors.white)
+                    ? const Icon(Icons.face, size: 80.0, color: Colors.white)
                     : image,
               ],
             ),
           ),
           const SizedBox(height: 20.0),
-          Text("Hey $userName!",
-              style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue)),
+          Text(
+            "Hey $userName!",
+            style: const TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.blue),
+          ),
         ],
       ),
     );

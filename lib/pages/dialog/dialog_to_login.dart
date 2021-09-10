@@ -41,7 +41,7 @@ class DialogToLogin extends StatelessWidget {
                   Navigator.of(context, rootNavigator: true).pop();
                   Navigator.pushNamed(context, "/auth");
                 },
-                child: Text("Log In",
+                child: const Text("Log In",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 16.0,
