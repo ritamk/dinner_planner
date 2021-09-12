@@ -50,7 +50,8 @@ class _ProfileState extends State<Profile> {
                   child: Scaffold(
                     appBar: AppBar(
                       leading: IconButton(
-                        onPressed: () => Navigator.pop(context, "/"),
+                        onPressed: () => Navigator.popUntil(
+                            context, ModalRoute.withName("/")),
                         icon: const Icon(Icons.arrow_back_ios),
                       ),
                       title: const Text("Profile"),

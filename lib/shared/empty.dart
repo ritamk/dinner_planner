@@ -23,6 +23,7 @@ class EmptyPage extends StatelessWidget {
             const Flexible(
               child: Text(
                 "Wow, didn't expect this to be so empty.",
+                textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.blue, fontSize: 15.0),
               ),
             ),
@@ -49,6 +50,7 @@ class EmptyBody extends StatelessWidget {
           Flexible(
             child: Text(
               message,
+              textAlign: TextAlign.center,
               style: TextStyle(color: Colors.blue, fontSize: 15.0),
             ),
           ),

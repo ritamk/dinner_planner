@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dinner_planner/models/food.dart';
 import 'package:dinner_planner/models/order.dart';
 import 'package:dinner_planner/models/user.dart';
+import 'package:flutter/foundation.dart';
 
 class DatabaseService {
   DatabaseService({this.uid, this.foodId});
@@ -50,7 +53,7 @@ class DatabaseService {
       });
     } catch (e) {
       print(e.toString());
-      return null;
+      return 1;
     }
   }
 
@@ -135,26 +138,6 @@ class DatabaseService {
     }
   }
 
-  List<Food> _foodListFromSnapshot(QuerySnapshot snapshot) {
-    return snapshot.docs.map((dynamic e) {
-      return Food(
-          name: e.data()["name"],
-          price: e.data()["price"],
-          veg: e.data()["veg"],
-          type: e.data()["type"],
-          foodId: e.data()["uid"],
-          about: e.data()["about"],
-          image: e.data()["image"]);
-    }).toList();
-  }
-
-  Stream<List<Food>> get food {
-    return menuCollectionReference
-        .orderBy("name")
-        .snapshots()
-        .map((QuerySnapshot snapshot) => _foodListFromSnapshot(snapshot));
-  }
-
   Stream<UserData> get userData {
     return userCollectionReference
         .doc(uid)
@@ -167,12 +150,25 @@ class DatabaseService {
         (DocumentSnapshot snapshot) => _extendedUserDataFromSnapshot(snapshot));
   }
 
-  // Future<List> get userActiveOrder async {
-  //   QuerySnapshot snapshot =
-  //       await menuCollectionReference.orderBy("name").get();
-  //   List food = snapshot.docs;
-  //   return food;
-  // }
+  Future<List<Food>> get foodList async {
+    QuerySnapshot snapshot =
+        await menuCollectionReference.orderBy("name").get();
+    List<QueryDocumentSnapshot> snap = snapshot.docs;
+    return await compute<List<QueryDocumentSnapshot>, List<Food>>(
+      isolateFoodGetter,
+      snap,
+    );
+  }
+
+  Future<List<Food>> get fullFoodList async {
+    QuerySnapshot snapshot =
+        await menuCollectionReference.orderBy("name").get();
+    List<QueryDocumentSnapshot> snap = snapshot.docs;
+    return await compute<List<QueryDocumentSnapshot>, List<Food>>(
+      isolateFoodGetter,
+      snap,
+    );
+  }
 
   Stream get userActiveOrder {
     return userCollectionReference
@@ -180,4 +176,17 @@ class DatabaseService {
         .snapshots()
         .map((DocumentSnapshot snapshot) => _userActiveOrders(snapshot));
   }
+}
+
+List<Food> isolateFoodGetter(List<QueryDocumentSnapshot> snapshot) {
+  return snapshot
+      .map((dynamic e) => Food(
+          name: e.data()["name"],
+          price: e.data()["price"],
+          veg: e.data()["veg"],
+          type: e.data()["type"],
+          foodId: e.data()["uid"],
+          about: e.data()["about"],
+          image: e.data()["image"]))
+      .toList();
 }

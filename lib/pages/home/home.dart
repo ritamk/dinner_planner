@@ -79,8 +79,8 @@ class Home extends StatelessWidget {
               child: FilterToggleButtonWidget()),
         ),
         body: Consumer<FoodListProvider>(builder: (context, provider, child) {
-          return StreamBuilder<List<Food>>(
-            stream: DatabaseService().food,
+          return FutureBuilder<List<Food>>(
+            future: DatabaseService().foodList,
             initialData: [],
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
@@ -90,10 +90,10 @@ class Home extends StatelessWidget {
                     food: provider.isOpen
                         ? provider.getSearchedFoodList
                         : provider.getFoodList);
-              } else if (snapshot.connectionState == ConnectionState.none) {
+              } else if (snapshot.hasError) {
                 return const EmptyBody(
                     message:
-                        "Couldn't connect to the internet.\nPlease check your network connection.");
+                        "Something went wrong.\nPlease check your network connection.");
               } else {
                 return const Loading();
               }

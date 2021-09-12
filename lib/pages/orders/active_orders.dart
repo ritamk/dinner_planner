@@ -20,7 +20,7 @@ class Orders extends StatelessWidget {
               appBar: AppBar(
                 leading: IconButton(
                   onPressed: () =>
-                      Navigator.of(context, rootNavigator: true).pop(),
+                      Navigator.popUntil(context, ModalRoute.withName("/")),
                   icon: const Icon(Icons.arrow_back_ios),
                 ),
                 title: const Text("Active Orders"),

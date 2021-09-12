@@ -159,8 +159,12 @@ class ImagePlaceholderWidget extends StatelessWidget {
               bottomLeft: Radius.elliptical(width, 40.0),
               bottomRight: Radius.elliptical(width, 40.0),
             ),
-            image:
-                DecorationImage(image: NetworkImage(food), fit: BoxFit.cover),
+            image: DecorationImage(
+              image: NetworkImage(food),
+              fit: BoxFit.cover,
+              onError: (object, stacktrace) =>
+                  SizedBox.expand(child: Container(color: Colors.black87)),
+            ),
           ),
           height: 200.0,
           width: double.infinity,

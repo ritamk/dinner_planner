@@ -1,3 +1,6 @@
+import 'package:dinner_planner/models/food.dart';
+import 'package:dinner_planner/services/database.dart';
+import 'package:dinner_planner/shared/loading.dart';
 import 'package:flutter/material.dart';
 
 class Setting extends StatelessWidget {

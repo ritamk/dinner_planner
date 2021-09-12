@@ -43,43 +43,66 @@ class _CartState extends State<Cart> {
               ),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.endFloat,
-              floatingActionButton: FloatingActionButton.extended(
-                tooltip: "Confirm Order",
-                onPressed: () {
-                  try {
-                    provider.orderList.forEach((element) {
-                      DatabaseService(uid: userID.uid)
-                          .updateUserOrders(element);
-                    });
-                    setState(() {
-                      provider.clearList();
-                    });
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: const Text(
-                          "Order Confirmed!\nPlease go to Orders page."),
-                      action: SnackBarAction(
-                          label: "Active Orders",
-                          textColor: Colors.greenAccent,
-                          onPressed: () =>
-                              Navigator.popAndPushNamed(context, "/orders")),
-                    ));
-                  } catch (e) {
-                    print(e.toString());
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: const Text(
-                          "Couldn't place order.\nPlease try again later."),
-                    ));
-                  }
-                },
-                label: Row(
-                  children: const <Widget>[
-                    Icon(Icons.check, color: Colors.white),
-                    SizedBox(width: 8.0),
-                    Text("Confirm",
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                  ],
-                ),
-              ),
+              floatingActionButton: StreamBuilder<ExtendedUserData?>(
+                  stream: DatabaseService(uid: userID.uid).extendedUserData,
+                  initialData: null,
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    final bool profUpdated = (snapshot.hasData)
+                        ? (snapshot.data.phone).isEmpty
+                            ? false
+                            : true
+                        : false;
+
+                    return FloatingActionButton.extended(
+                      tooltip: "Confirm Order",
+                      onPressed: () {
+                        if (profUpdated) {
+                          try {
+                            provider.orderList.forEach((element) {
+                              DatabaseService(uid: userID.uid)
+                                  .updateUserOrders(element);
+                            });
+                            setState(() {
+                              provider.clearList();
+                            });
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: const Text(
+                                  "Order Confirmed!\nPlease go to Orders page."),
+                              action: SnackBarAction(
+                                  label: "Active Orders",
+                                  textColor: Colors.greenAccent,
+                                  onPressed: () => Navigator.popAndPushNamed(
+                                      context, "/orders")),
+                            ));
+                          } catch (e) {
+                            print(e.toString());
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: const Text(
+                                  "Couldn't place order.\nPlease try again later."),
+                            ));
+                          }
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: const Text(
+                                "Please update your profile.\nYour phone number & address are required to place orders."),
+                            action: SnackBarAction(
+                                label: "Profile",
+                                textColor: Colors.greenAccent,
+                                onPressed: () => Navigator.popAndPushNamed(
+                                    context, "/profile")),
+                          ));
+                        }
+                      },
+                      label: Row(
+                        children: const <Widget>[
+                          Icon(Icons.check, color: Colors.white),
+                          SizedBox(width: 8.0),
+                          Text("Confirm",
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    );
+                  }),
               bottomNavigationBar: BottomAppBar(
                 color: Colors.lightBlue,
                 // shape: CircularNotchedRectangle(),

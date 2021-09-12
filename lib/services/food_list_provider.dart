@@ -1,4 +1,5 @@
 import 'package:dinner_planner/models/food.dart';
+import 'package:dinner_planner/services/database.dart';
 import 'package:flutter/cupertino.dart';
 
 class FoodListProvider with ChangeNotifier {
@@ -18,12 +19,13 @@ class FoodListProvider with ChangeNotifier {
   }
 
   void searchFood(String word) {
-    _searchedFood = _food;
-    if (word.isNotEmpty) {
-      _searchedFood
-          .retainWhere((element) => element.name.toLowerCase().contains(word));
-      notifyListeners();
-    }
+    DatabaseService().fullFoodList.then((value) {
+      _searchedFood = value;
+      _food = value;
+    });
+    _searchedFood
+        .retainWhere((element) => element.name.toLowerCase().contains(word));
+    notifyListeners();
   }
 
   void searchClear() {
