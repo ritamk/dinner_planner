@@ -7,8 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class HomeDrawer extends StatelessWidget {
-  const HomeDrawer({Key? key, required this.loginWidget}) : super(key: key);
-  final Widget loginWidget;
+  const HomeDrawer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +74,13 @@ class HomeDrawer extends StatelessWidget {
                               AuthenticationService().signOut();
                             },
                           )
-                        : loginWidget,
+                        : ListTile(
+                            contentPadding: _contentPadding,
+                            leading: const Icon(Icons.login_rounded),
+                            title: const Text("Log In", style: _titleStyle),
+                            trailing: const Icon(Icons.arrow_right),
+                            onTap: () => Navigator.pushNamed(context, "/auth"),
+                          ),
                     ListTile(
                       contentPadding: _contentPadding,
                       leading: const Icon(Icons.power_settings_new_rounded),

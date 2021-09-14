@@ -100,16 +100,7 @@ class Home extends StatelessWidget {
             },
           );
         }),
-        drawer: HomeDrawer(
-          loginWidget: ListTile(
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0),
-            leading: const Icon(Icons.login_rounded),
-            title: const Text("Log In", style: TextStyle(fontSize: 16.0)),
-            trailing: const Icon(Icons.arrow_right),
-            onTap: () => Navigator.pushNamed(context, "/auth"),
-          ),
-        ),
+        drawer: HomeDrawer(),
       ),
     );
   }

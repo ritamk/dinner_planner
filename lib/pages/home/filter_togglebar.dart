@@ -30,13 +30,11 @@ class _FilterToggleButtonWidgetState extends State<FilterToggleButtonWidget>
   Widget build(BuildContext context) {
     return Consumer<FilterListProvider>(builder: (context, provider, child) {
       return TabBar(
-        enableFeedback: false,
         onTap: (index) {
-          setState(() {
-            provider.filterChange(index);
-          });
+          // setState(() {
+          provider.filterChange(index);
+          // });
         },
-        isScrollable: true,
         controller: _tabController,
         tabs: <Widget>[
           TabsWidget(index: 0, selected: provider.filterIndex),
@@ -45,6 +43,7 @@ class _FilterToggleButtonWidgetState extends State<FilterToggleButtonWidget>
           TabsWidget(index: 3, selected: provider.filterIndex),
           TabsWidget(index: 4, selected: provider.filterIndex),
         ],
+        isScrollable: true,
       );
     });
   }

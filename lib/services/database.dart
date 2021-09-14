@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dinner_planner/models/food.dart';
 import 'package:dinner_planner/models/order.dart';

@@ -20,6 +20,8 @@ class FoodList extends StatefulWidget {
 }
 
 class _FoodListState extends State<FoodList> {
+  final PageController _pageController = PageController();
+
   @override
   Widget build(BuildContext context) {
     return Consumer<FilterListProvider>(
@@ -36,9 +38,9 @@ class _FoodListState extends State<FoodList> {
           children: _pages,
           controller: provider.pageController,
           onPageChanged: (num) {
-            setState(() {
-              provider.filterChange(num);
-            });
+            // setState(() {
+            provider.filterChange(num);
+            // });
           },
         );
       },

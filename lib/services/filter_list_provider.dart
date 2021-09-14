@@ -9,20 +9,19 @@ class FilterListProvider with ChangeNotifier {
     "Sandwiches",
   ];
 
-  int _num = 0;
+  int _selectedIndex = 0;
 
   PageController _pageController = PageController();
 
-  String get filteredString => _selectedFilter[_num];
+  String get filteredString => _selectedFilter[_selectedIndex];
 
   List<String> get filterList => _selectedFilter;
 
-  int get filterIndex => _num;
+  int get filterIndex => _selectedIndex;
 
-  void filterChange(int num) {
-    _num = num;
-    _pageController.animateToPage(num,
-        duration: Duration(milliseconds: 100), curve: Curves.easeIn);
+  void filterChange(int index) {
+    _selectedIndex = index;
+    _pageController.jumpToPage(index);
     notifyListeners();
   }
 
