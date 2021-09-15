@@ -1,29 +1,60 @@
 import 'package:dinner_planner/models/food.dart';
 import 'package:dinner_planner/pages/food_list/food_list_tile.dart';
+import 'package:dinner_planner/services/database.dart';
+import 'package:dinner_planner/services/food_list_provider.dart';
 import 'package:dinner_planner/shared/loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class SaladFoodList extends StatelessWidget {
-  const SaladFoodList({Key? key, required this.loggedIn, required this.food})
+class SaladFoodList extends StatefulWidget {
+  const SaladFoodList(
+      {Key? key,
+      required this.loggedIn,
+      required this.height,
+      required this.provider})
       : super(key: key);
   final bool loggedIn;
-  final List<Food> food;
+  final double height;
+  final FoodListProvider provider;
 
   @override
+  State<SaladFoodList> createState() => _SaladFoodListState();
+}
+
+class _SaladFoodListState extends State<SaladFoodList>
+    with AutomaticKeepAliveClientMixin {
+  @override
   Widget build(BuildContext context) {
-    return food.isEmpty
-        ? Loading()
-        : ListView.builder(
-            itemCount: food.length,
-            itemBuilder: (BuildContext context, int index) {
-              return food[index].type == "salad"
-                  ? FoodTile(
-                      food: food[index], loggedIn: loggedIn, index: index)
-                  : const SizedBox.shrink();
-            },
-            scrollDirection: Axis.vertical,
-            physics: const BouncingScrollPhysics(),
-          );
+    super.build(context);
+    return FutureBuilder<List<Food>>(
+        future: DatabaseService().foodList,
+        initialData: [],
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          return snapshot.data.isEmpty
+              ? Loading()
+              : RefreshIndicator(
+                  onRefresh: () async {
+                    setState(() {
+                      ;
+                    });
+                  },
+                  child: ListView.builder(
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return snapshot.data[index].type == "salad"
+                          ? FoodTile(
+                              food: snapshot.data[index],
+                              loggedIn: widget.loggedIn,
+                              index: index)
+                          : const SizedBox.shrink();
+                    },
+                    scrollDirection: Axis.vertical,
+                    physics: const BouncingScrollPhysics(),
+                  ),
+                );
+        });
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

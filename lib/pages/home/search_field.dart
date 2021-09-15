@@ -58,7 +58,7 @@ class _SearchFieldState extends State<SearchField>
                 tooltip: "Search",
                 onPressed: () {
                   widget.foodListProvider.openClose();
-                  if (widget.foodListProvider.isOpen) {
+                  if (widget.foodListProvider.isSearching) {
                     setState(() {
                       _animationController.forward();
                     });
@@ -74,7 +74,7 @@ class _SearchFieldState extends State<SearchField>
                     _textController.clear();
                   }
                 },
-                icon: widget.foodListProvider.isOpen
+                icon: widget.foodListProvider.isSearching
                     ? const Icon(Icons.close, color: Colors.white)
                     : const Icon(Icons.search, color: Colors.white),
               ),

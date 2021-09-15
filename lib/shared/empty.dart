@@ -19,7 +19,7 @@ class EmptyPage extends StatelessWidget {
           children: <Widget>[
             const Icon(Icons.remove_shopping_cart,
                 color: Colors.blue, size: 25.0),
-            const SizedBox(height: 40.0),
+            const SizedBox(height: 25.0),
             const Flexible(
               child: Text(
                 "Wow, didn't expect this to be so empty.",
@@ -46,7 +46,7 @@ class EmptyBody extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           const Icon(Icons.error, color: Colors.blue, size: 25.0),
-          const SizedBox(height: 40.0),
+          const SizedBox(height: 25.0),
           Flexible(
             child: Text(
               message,

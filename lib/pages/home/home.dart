@@ -1,14 +1,10 @@
-import 'package:dinner_planner/models/food.dart';
 import 'package:dinner_planner/models/user.dart';
 import 'package:dinner_planner/pages/home/drawer.dart';
 import 'package:dinner_planner/pages/food_list/food_list.dart';
 import 'package:dinner_planner/pages/home/filter_togglebar.dart';
 import 'package:dinner_planner/pages/home/search_field.dart';
-import 'package:dinner_planner/services/database.dart';
 import 'package:dinner_planner/services/food_list_provider.dart';
 import 'package:dinner_planner/services/order_list_provider.dart';
-import 'package:dinner_planner/shared/empty.dart';
-import 'package:dinner_planner/shared/loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -78,30 +74,29 @@ class Home extends StatelessWidget {
               preferredSize: Size(double.infinity, double.minPositive),
               child: FilterToggleButtonWidget()),
         ),
-        body: Consumer<FoodListProvider>(builder: (context, provider, child) {
-          return FutureBuilder<List<Food>>(
-            future: DatabaseService().foodList,
-            initialData: [],
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                provider.addFood(snapshot.data);
-                return FoodList(
-                    loggedIn: loggedIn,
-                    food: provider.isOpen
-                        ? provider.getSearchedFoodList
-                        : provider.getFoodList);
-              } else if (snapshot.hasError) {
-                return const EmptyBody(
-                    message:
-                        "Something went wrong.\nPlease check your network connection.");
-              } else {
-                return const Loading();
-              }
-            },
-          );
-        }),
+        body: FoodList(loggedIn: loggedIn),
         drawer: HomeDrawer(),
       ),
     );
   }
 }
+
+
+// Consumer<FoodListProvider>(builder: (context, provider, child) {
+//           return FutureBuilder<List<Food>>(
+//             future: DatabaseService().foodList,
+//             initialData: [],
+//             builder: (BuildContext context, AsyncSnapshot snapshot) {
+//               if (snapshot.hasData) {
+//                 provider.addFood(snapshot.data);
+//                 return FoodList(loggedIn: loggedIn);
+//               } else if (snapshot.hasError) {
+//                 return const EmptyBody(
+//                     message:
+//                         "Something went wrong.\nPlease check your network connection.");
+//               } else {
+//                 return const Loading();
+//               }
+//             },
+//           );
+//         }),

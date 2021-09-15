@@ -18,7 +18,7 @@ class NotLoggedIn extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Icon(Icons.person_off, color: Colors.blue, size: 25.0),
-            const SizedBox(height: 40.0),
+            const SizedBox(height: 25.0),
             const Flexible(
               child: Text(
                 "Why leave this empty when you can log-in?",
