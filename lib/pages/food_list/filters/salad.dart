@@ -26,33 +26,21 @@ class _SaladFoodListState extends State<SaladFoodList>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return FutureBuilder<List<Food>>(
-        future: DatabaseService().foodList,
-        initialData: [],
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          return snapshot.data.isEmpty
-              ? Loading()
-              : RefreshIndicator(
-                  onRefresh: () async {
-                    setState(() {
-                      ;
-                    });
-                  },
-                  child: ListView.builder(
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return snapshot.data[index].type == "salad"
-                          ? FoodTile(
-                              food: snapshot.data[index],
-                              loggedIn: widget.loggedIn,
-                              index: index)
-                          : const SizedBox.shrink();
-                    },
-                    scrollDirection: Axis.vertical,
-                    physics: const BouncingScrollPhysics(),
-                  ),
-                );
-        });
+    return widget.provider.getFoodList.isEmpty
+        ? Loading()
+        : ListView.builder(
+            itemCount: widget.provider.getFoodList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return widget.provider.getFoodList[index].type == "salad"
+                  ? FoodTile(
+                      food: widget.provider.getFoodList[index],
+                      loggedIn: widget.loggedIn,
+                      index: index)
+                  : const SizedBox.shrink();
+            },
+            scrollDirection: Axis.vertical,
+            physics: const BouncingScrollPhysics(),
+          );
   }
 
   @override

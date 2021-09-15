@@ -9,6 +9,10 @@ class FoodListProvider with ChangeNotifier {
   bool _isOpen = false;
   bool _loadMore = false;
 
+  void initFood(List<Food> food) {
+    _food = food;
+  }
+
   void addFood(List<Food> food) {
     _food.addAll(food);
   }
