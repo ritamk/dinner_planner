@@ -1,5 +1,6 @@
 import 'package:dinner_planner/services/food_list_provider.dart';
 import 'package:dinner_planner/shared/debouncer.dart';
+import 'package:dinner_planner/shared/loading.dart';
 import 'package:flutter/material.dart';
 
 class SearchField extends StatefulWidget {
@@ -39,51 +40,68 @@ class _SearchFieldState extends State<SearchField>
           width: _animation.value,
           constraints: const BoxConstraints(maxWidth: double.maxFinite),
           child: TextFormField(
-            controller: _textController,
-            cursorColor: Colors.white,
-            focusNode: _focusNode,
-            decoration: InputDecoration(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 12.0),
-              fillColor: Colors.blue,
-              filled: true,
-              hintText: "Search",
-              hintStyle: const TextStyle(fontSize: 18.0, color: Colors.white),
-              enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25.0),
-                  borderSide: BorderSide.none),
-              focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25.0),
-                  borderSide: BorderSide.none),
-              prefixIcon: IconButton(
-                tooltip: "Search",
-                onPressed: () {
-                  widget.foodListProvider.openClose();
-                  if (widget.foodListProvider.isSearching) {
-                    setState(() {
-                      _animationController.forward();
-                    });
-                    _focusNode.requestFocus();
-                  } else {
-                    setState(() {
-                      _animationController.reverse();
-                    });
-                    widget.foodListProvider.searchClear();
-                    if (_focusNode.hasFocus) {
-                      _focusNode.unfocus();
+              controller: _textController,
+              cursorColor: Colors.white,
+              focusNode: _focusNode,
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12.0),
+                fillColor: Colors.blue,
+                filled: true,
+                hintText: "Search",
+                hintStyle: const TextStyle(fontSize: 18.0, color: Colors.white),
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                    borderSide: BorderSide.none),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                    borderSide: BorderSide.none),
+                prefixIcon: IconButton(
+                  tooltip: "Search",
+                  onPressed: () {
+                    widget.foodListProvider.openClose();
+                    if (widget.foodListProvider.isSearching) {
+                      setState(() {
+                        _animationController.forward();
+                      });
+                      _focusNode.requestFocus();
+                    } else {
+                      setState(() {
+                        _animationController.reverse();
+                      });
+                      widget.foodListProvider.searchClear();
+                      if (_focusNode.hasFocus) {
+                        _focusNode.unfocus();
+                      }
+                      _textController.clear();
                     }
-                    _textController.clear();
-                  }
-                },
-                icon: widget.foodListProvider.isSearching
-                    ? const Icon(Icons.close, color: Colors.white)
-                    : const Icon(Icons.search, color: Colors.white),
+                  },
+                  icon: widget.foodListProvider.isSearching
+                      ? const Icon(Icons.close, color: Colors.white)
+                      : const Icon(Icons.search, color: Colors.white),
+                ),
               ),
-            ),
-            style: const TextStyle(fontSize: 18.0, color: Colors.white),
-            textInputAction: TextInputAction.search,
-            onChanged: (val) => _debouncer.run(
-                () => widget.foodListProvider.searchFood(val.toLowerCase())),
-          ),
+              style: const TextStyle(fontSize: 18.0, color: Colors.white),
+              textInputAction: TextInputAction.search,
+              onFieldSubmitted: (val) {
+                // _debouncer.run( () =>
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        SizedBox.square(child: Loading(), dimension: 20.0),
+                        SizedBox(width: 10.0),
+                        Text("Loading..."),
+                      ],
+                    ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.0)),
+                    behavior: SnackBarBehavior.floating,
+                    duration: Duration(seconds: 1)));
+                widget.foodListProvider.searchFood(val.toLowerCase());
+              }
+              // ),
+              ),
         );
       },
     );

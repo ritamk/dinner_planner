@@ -1,12 +1,14 @@
 import 'package:dinner_planner/models/food.dart';
 import 'package:dinner_planner/services/database.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 class FoodListProvider with ChangeNotifier {
   List<Food> _food = [];
   List<Food> _searchedFood = [];
 
   bool _isOpen = false;
+  bool _searchLoading = false;
   bool _loadMore = false;
 
   void initFood(List<Food> food) {
@@ -34,11 +36,11 @@ class FoodListProvider with ChangeNotifier {
   void searchFood(String word) {
     DatabaseService().fullFoodList.then((value) {
       _searchedFood = value;
-      _food = value;
+    }).whenComplete(() {
+      _searchedFood
+          .retainWhere((element) => element.name.toLowerCase().contains(word));
+      notifyListeners();
     });
-    _searchedFood
-        .retainWhere((element) => element.name.toLowerCase().contains(word));
-    notifyListeners();
   }
 
   void searchClear() {
@@ -55,5 +57,6 @@ class FoodListProvider with ChangeNotifier {
   List<Food> get getFoodList => _food;
   List<Food> get getSearchedFoodList => _searchedFood;
   bool get isSearching => _isOpen;
+  bool get searchLoad => _searchLoading;
   bool get loadMore => _loadMore;
 }
