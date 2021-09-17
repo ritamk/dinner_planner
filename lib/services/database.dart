@@ -202,25 +202,8 @@ class DatabaseService {
   Future<List<FetchOrderData>> get userActiveOrder async {
     DocumentSnapshot snapshot = await userCollectionReference.doc(uid).get();
     List<dynamic> snapDocs = snapshot.get("order");
-    List<FetchOrderData> food = [];
-    for (Map<String, dynamic> item in snapDocs) {
-      food
-        ..add(FetchOrderData(
-            item: item.values.elementAt(0),
-            price: item.values.elementAt(1),
-            qty: item.values.elementAt(2),
-            name: item.values.elementAt(3),
-            time: item.values.elementAt(4)));
-    }
-    return food;
-    // for (int i = 0; i < snapDocs.length; i++) {
-    //   return FetchOrderData(
-    //       item: snapDocs[i].values.toList()[0],
-    //       name: snapDocs[i].values.toList()[3],
-    //       qty: snapDocs[i].values.toList()[2],
-    //       price: snapDocs[i].values.toList()[1],
-    //       time: snapDocs[i].values.toList()[4]);
-    // }
+    return await compute<List<dynamic>, List<FetchOrderData>>(
+        isolateActiveOrderGetter, snapDocs);
   }
 }
 
@@ -234,5 +217,16 @@ List<Food> isolateFoodGetter(List<QueryDocumentSnapshot> snapshot) {
           foodId: e.data()["uid"],
           about: e.data()["about"],
           image: e.data()["image"]))
+      .toList();
+}
+
+List<FetchOrderData> isolateActiveOrderGetter(List<dynamic> snapshot) {
+  return snapshot
+      .map((dynamic e) => FetchOrderData(
+          item: e.values.elementAt(0),
+          price: e.values.elementAt(1),
+          qty: e.values.elementAt(2),
+          name: e.values.elementAt(3),
+          time: e.values.elementAt(4)))
       .toList();
 }
