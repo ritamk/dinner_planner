@@ -105,10 +105,10 @@ class _ProfileState extends State<Profile> {
                               focusNode: _adLineFocus,
                               initialValue: location[3].value,
                               decoration: profileInputDecoration()
-                                  .copyWith(helperText: "Post-office"),
+                                  .copyWith(helperText: "Address"),
                               onChanged: (val) => _adLine = val,
                               validator: (val) => val!.isEmpty
-                                  ? "Please enter the name of your post-office/neighbourhood"
+                                  ? "Please enter your post-office/neighbourhood"
                                   : null,
                             ),
                             const Divider(),
@@ -120,7 +120,7 @@ class _ProfileState extends State<Profile> {
                                   .copyWith(helperText: "City/District"),
                               onChanged: (val) => _city = val,
                               validator: (val) => val!.isEmpty
-                                  ? "Please enter the name of your city/district"
+                                  ? "Please enter your city/district"
                                   : null,
                             ),
                             const Divider(),
@@ -132,7 +132,7 @@ class _ProfileState extends State<Profile> {
                                   .copyWith(helperText: "State"),
                               onChanged: (val) => _state = val,
                               validator: (val) => val!.isEmpty
-                                  ? "Please enter the name of your state"
+                                  ? "Please enter of your state"
                                   : null,
                             ),
                             const Divider(),

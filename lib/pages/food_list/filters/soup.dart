@@ -29,27 +29,31 @@ class _SoupFoodListState extends State<SoupFoodList>
     super.build(context);
     return widget.provider.getFoodList.isEmpty
         ? Loading()
-        : ListView.builder(
-            itemCount: widget.provider.isSearching
-                ? widget.provider.getSearchedFoodList.length
-                : widget.provider.getFoodList.length,
-            itemBuilder: (BuildContext context, int index) {
-              return widget.provider.isSearching
-                  ? widget.provider.getSearchedFoodList[index].type == "soup"
-                      ? FoodTile(
-                          food: widget.provider.getSearchedFoodList[index],
-                          loggedIn: widget.loggedIn,
-                          index: index)
-                      : const SizedBox.shrink()
-                  : widget.provider.getFoodList[index].type == "soup"
-                      ? FoodTile(
-                          food: widget.provider.getFoodList[index],
-                          loggedIn: widget.loggedIn,
-                          index: index)
-                      : const SizedBox.shrink();
-            },
-            scrollDirection: Axis.vertical,
-            physics: const BouncingScrollPhysics(),
+        : RefreshIndicator(
+            onRefresh: () async => setState(() {}),
+            child: ListView.builder(
+              itemCount: widget.provider.isSearching
+                  ? widget.provider.getSearchedFoodList.length
+                  : widget.provider.getFoodList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return widget.provider.isSearching
+                    ? widget.provider.getSearchedFoodList[index].type == "soup"
+                        ? FoodTile(
+                            food: widget.provider.getSearchedFoodList[index],
+                            loggedIn: widget.loggedIn,
+                            index: index)
+                        : const SizedBox.shrink()
+                    : widget.provider.getFoodList[index].type == "soup"
+                        ? FoodTile(
+                            food: widget.provider.getFoodList[index],
+                            loggedIn: widget.loggedIn,
+                            index: index)
+                        : const SizedBox.shrink();
+              },
+              scrollDirection: Axis.vertical,
+              physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics()),
+            ),
           );
   }
 }

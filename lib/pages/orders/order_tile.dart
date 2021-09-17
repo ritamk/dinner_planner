@@ -41,7 +41,7 @@ class OrderTile extends StatelessWidget {
                     style: const TextStyle(
                         fontWeight: FontWeight.bold, color: Colors.black87)),
                 TextSpan(
-                    text: "${qty.toString()} unit",
+                    text: "${qty.toString()}",
                     style: const TextStyle(color: Colors.black54)),
               ],
             ),

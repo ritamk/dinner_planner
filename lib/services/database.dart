@@ -199,11 +199,28 @@ class DatabaseService {
     );
   }
 
-  Stream get userActiveOrder {
-    return userCollectionReference
-        .doc(uid)
-        .snapshots()
-        .map((DocumentSnapshot snapshot) => _userActiveOrders(snapshot));
+  Future<List<FetchOrderData>> get userActiveOrder async {
+    DocumentSnapshot snapshot = await userCollectionReference.doc(uid).get();
+    List<dynamic> snapDocs = snapshot.get("order");
+    List<FetchOrderData> food = [];
+    for (Map<String, dynamic> item in snapDocs) {
+      food
+        ..add(FetchOrderData(
+            item: item.values.elementAt(0),
+            price: item.values.elementAt(1),
+            qty: item.values.elementAt(2),
+            name: item.values.elementAt(3),
+            time: item.values.elementAt(4)));
+    }
+    return food;
+    // for (int i = 0; i < snapDocs.length; i++) {
+    //   return FetchOrderData(
+    //       item: snapDocs[i].values.toList()[0],
+    //       name: snapDocs[i].values.toList()[3],
+    //       qty: snapDocs[i].values.toList()[2],
+    //       price: snapDocs[i].values.toList()[1],
+    //       time: snapDocs[i].values.toList()[4]);
+    // }
   }
 }
 

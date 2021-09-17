@@ -10,7 +10,16 @@ class OrderData {
 }
 
 class FetchOrderData {
-  final List? foodList;
+  final DocumentReference item;
+  final int price;
+  final int qty;
+  final String name;
+  final Timestamp time;
 
-  FetchOrderData({this.foodList});
+  FetchOrderData(
+      {required this.item,
+      required this.price,
+      required this.qty,
+      required this.name,
+      required this.time});
 }

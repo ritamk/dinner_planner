@@ -53,7 +53,8 @@ class _AllFoodListState extends State<AllFoodList>
                       index: index);
                 },
                 scrollDirection: Axis.vertical,
-                physics: const BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
               ),
             );
           }
