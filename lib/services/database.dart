@@ -5,8 +5,6 @@ import 'package:dinner_planner/models/order.dart';
 import 'package:dinner_planner/models/user.dart';
 import 'package:flutter/foundation.dart';
 
-DocumentSnapshot? lastDocument;
-
 class DatabaseService {
   DatabaseService({this.uid, this.foodId});
   final String? uid;
@@ -147,6 +145,7 @@ class DatabaseService {
         (DocumentSnapshot snapshot) => _extendedUserDataFromSnapshot(snapshot));
   }
 
+  static DocumentSnapshot? lastDocument;
   final int numDocsToLoad = 10;
 
   Future<List<Food>> get foodList async {

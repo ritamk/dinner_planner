@@ -3,12 +3,11 @@ import 'package:dinner_planner/services/database.dart';
 import 'package:flutter/cupertino.dart';
 
 class FoodListProvider with ChangeNotifier {
+  static List<Food> fullFood = [];
   List<Food> _food = [];
   List<Food> _searchedFood = [];
 
   bool _isOpen = false;
-  bool _searchLoading = false;
-  bool _loadMore = false;
 
   void initFood(List<Food> food) {
     _food = food;
@@ -20,44 +19,26 @@ class FoodListProvider with ChangeNotifier {
     }
   }
 
-  // List<Food> addMoreFood() {
-  //   Future<List<Food>> food = DatabaseService().moreFoodList;
-  //   List<Food> list = [];
-  //   food.then((value) {
-  //     list = value;
-  //   });
-  //   return list;
-  // }
-
   void openClose() {
     _isOpen = !_isOpen;
     notifyListeners();
   }
 
-  void searchFood(String word) {
-    DatabaseService().fullFoodList.then((value) {
-      _searchedFood = value;
-    }).whenComplete(() {
-      _searchedFood
-          .retainWhere((element) => element.name.toLowerCase().contains(word));
-      notifyListeners();
-    });
+  void searchFood(String word) async {
+    if (fullFood.isEmpty) {
+      await DatabaseService().fullFoodList.then((value) => fullFood = value);
+    }
+    _searchedFood = fullFood;
+    _searchedFood
+        .retainWhere((element) => element.name.toLowerCase().contains(word));
+    notifyListeners();
   }
 
   void searchClear() {
     _searchedFood.clear();
   }
 
-  void loadMoreFood() {
-    _loadMore = true;
-    notifyListeners();
-    _loadMore = false;
-    notifyListeners();
-  }
-
   List<Food> get getFoodList => _food;
   List<Food> get getSearchedFoodList => _searchedFood;
   bool get isSearching => _isOpen;
-  bool get searchLoad => _searchLoading;
-  bool get loadMore => _loadMore;
 }

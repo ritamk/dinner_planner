@@ -43,7 +43,6 @@ class _AllFoodListState extends State<AllFoodList>
     _scrollController.addListener(() {
       if (_scrollController.position.maxScrollExtent ==
           _scrollController.position.pixels) {
-        // print("loading more");
         getMoreFood().whenComplete(() => setState(() {}));
       }
     });
