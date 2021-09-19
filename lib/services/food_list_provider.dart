@@ -14,8 +14,10 @@ class FoodListProvider with ChangeNotifier {
     _food = food;
   }
 
-  void addFood(List<Food> food) {
-    _food.addAll(food);
+  void addFood(List<Food>? food) {
+    if (food != null) {
+      _food.addAll(food);
+    }
   }
 
   // List<Food> addMoreFood() {
