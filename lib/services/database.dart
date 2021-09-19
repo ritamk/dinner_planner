@@ -5,6 +5,8 @@ import 'package:dinner_planner/models/order.dart';
 import 'package:dinner_planner/models/user.dart';
 import 'package:flutter/foundation.dart';
 
+DocumentSnapshot? lastDocument;
+
 class DatabaseService {
   DatabaseService({this.uid, this.foodId});
   final String? uid;
@@ -112,10 +114,6 @@ class DatabaseService {
     });
   }
 
-  List _userActiveOrders(DocumentSnapshot snapshot) {
-    return snapshot.get("order");
-  }
-
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
     return UserData(
         uid: uid!, name: snapshot["name"], userPic: snapshot["userPic"]);
@@ -149,7 +147,6 @@ class DatabaseService {
         (DocumentSnapshot snapshot) => _extendedUserDataFromSnapshot(snapshot));
   }
 
-  late DocumentSnapshot lastDocument;
   final int numDocsToLoad = 10;
 
   Future<List<Food>> get foodList async {
@@ -158,36 +155,26 @@ class DatabaseService {
         .limit(numDocsToLoad)
         .get();
     List<QueryDocumentSnapshot> snapDocs = snapshot.docs;
-    lastDocument = await snapDocs[numDocsToLoad - 1];
+    lastDocument = await snapDocs.last;
     return await compute<List<QueryDocumentSnapshot>, List<Food>>(
       isolateFoodGetter,
       snapDocs,
     );
   }
 
-  // Future<List<Food>> get moreFoodList async {
-  //   QuerySnapshot snapshot;
-  //   if (lastDocument != null) {
-  //     snapshot = await menuCollectionReference
-  //         .orderBy("name")
-  //         .startAfterDocument(lastDocument!)
-  //         .limit(numDocsToLoad)
-  //         .get();
-  //   } else {
-  //     snapshot = await menuCollectionReference
-  //         .orderBy("name")
-  //         .limit(numDocsToLoad)
-  //         .get();
-  //   }
-
-  //   List<QueryDocumentSnapshot> snapDocs = snapshot.docs;
-  //   numDocsToLoad += numDocsToLoad;
-  //   lastDocument = await snapshot.docs[numDocsToLoad - 1];
-  //   return await compute<List<QueryDocumentSnapshot>, List<Food>>(
-  //     isolateFoodGetter,
-  //     snapDocs,
-  //   );
-  // }
+  Future<List<Food>> get moreFoodList async {
+    QuerySnapshot snapshot = await menuCollectionReference
+        .orderBy("name")
+        .startAfterDocument(lastDocument!)
+        .limit(numDocsToLoad)
+        .get();
+    List<QueryDocumentSnapshot> snapDocs = snapshot.docs;
+    lastDocument = await snapDocs.last;
+    return await compute<List<QueryDocumentSnapshot>, List<Food>>(
+      isolateFoodGetter,
+      snapDocs,
+    );
+  }
 
   Future<List<Food>> get fullFoodList async {
     QuerySnapshot snapshot =

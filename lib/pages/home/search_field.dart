@@ -1,5 +1,4 @@
 import 'package:dinner_planner/services/food_list_provider.dart';
-import 'package:dinner_planner/shared/debouncer.dart';
 import 'package:dinner_planner/shared/loading.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +17,6 @@ class _SearchFieldState extends State<SearchField>
   late TextEditingController _textController;
   late AnimationController _animationController;
   late Animation _animation;
-  final Debouncer _debouncer = Debouncer(milliseconds: 800);
 
   @override
   void initState() {

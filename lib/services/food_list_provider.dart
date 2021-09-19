@@ -1,7 +1,6 @@
 import 'package:dinner_planner/models/food.dart';
 import 'package:dinner_planner/services/database.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 
 class FoodListProvider with ChangeNotifier {
   List<Food> _food = [];
