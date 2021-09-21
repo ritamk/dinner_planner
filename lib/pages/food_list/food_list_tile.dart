@@ -6,6 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/// Custom ExpansionTile (Custom ListTile) widgets that display food
+/// item information.
 class FoodTile extends StatefulWidget {
   FoodTile(
       {Key? key,
@@ -13,8 +15,14 @@ class FoodTile extends StatefulWidget {
       required this.loggedIn,
       required this.index})
       : super(key: key);
+
+  /// Boolean to know if the user is logged-in.
   final bool loggedIn;
+
+  /// Food model item.
   final Food food;
+
+  /// Index of the list item.
   final int index;
 
   @override
@@ -37,8 +45,10 @@ class _FoodTileState extends State<FoodTile> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    // Controls animation of the add-to-cart button.
     _addClosecontroller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    // Controls animation of the tap-to-expand button.
     _openClosecontroller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 200));
     _addClose =
@@ -56,6 +66,7 @@ class _FoodTileState extends State<FoodTile> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    // Device measurements to help with drawing the food image.
     final double width = MediaQuery.of(context).size.width / 2.0;
     final double maxWidth = width / 0.8;
 
@@ -69,12 +80,15 @@ class _FoodTileState extends State<FoodTile> with TickerProviderStateMixin {
         ),
         child: ExpansionTile(
           childrenPadding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
+          // Opening closing of the ExpansionTile
           onExpansionChanged: (val) => val
               ? _openClosecontroller.forward()
               : _openClosecontroller.reverse(),
           leading: RotationTransition(
               turns: _openClose, child: const Icon(Icons.keyboard_arrow_down)),
-          title: Text(
+          title:
+              // Displays the name of the Food item.
+              Text(
             "${widget.food.name}",
             style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
           ),
@@ -86,6 +100,10 @@ class _FoodTileState extends State<FoodTile> with TickerProviderStateMixin {
                   child: const Icon(Icons.add),
                 ),
                 onPressed: () {
+                  // Checks if the user is logged-in or not. If true,
+                  // it proceeds with adding the Food item in the _orders
+                  // list in the OrderListProvider class. Otherwise it
+                  // displays a dialog to log-in.
                   setState(() {
                     if (widget.loggedIn) {
                       added = !added;
@@ -118,12 +136,15 @@ class _FoodTileState extends State<FoodTile> with TickerProviderStateMixin {
               children: <Widget>[
                 Container(
                   constraints: BoxConstraints(maxWidth: maxWidth),
-                  child: Text(
+                  child:
+                      // Displays the "about" info of the Food item.
+                      Text(
                     "${widget.food.about}",
                     style: const TextStyle(
                         fontSize: 16.0, fontFamily: "KaiseiHarunoUmi-Medium"),
                   ),
                 ),
+                // Displays the "price" of the Food item.
                 Text(
                   "₹ ${widget.food.price.toString()}",
                   style: const TextStyle(
@@ -142,8 +163,14 @@ class ImagePlaceholderWidget extends StatelessWidget {
   const ImagePlaceholderWidget(
       {Key? key, required this.width, required this.food, required this.veg})
       : super(key: key);
+
+  /// Width of the device
   final double width;
+
+  /// Url of the food item image
   final String food;
+
+  /// Veg/non-veg boolean
   final bool veg;
 
   @override

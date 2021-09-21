@@ -4,15 +4,12 @@ import 'package:dinner_planner/shared/loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+/// Category containing only food items marked as "salad" under "type" data.
 class SaladFoodList extends StatefulWidget {
   const SaladFoodList(
-      {Key? key,
-      required this.loggedIn,
-      required this.height,
-      required this.provider})
+      {Key? key, required this.loggedIn, required this.provider})
       : super(key: key);
   final bool loggedIn;
-  final double height;
   final FoodListProvider provider;
 
   @override
@@ -36,6 +33,9 @@ class _SaladFoodListState extends State<SaladFoodList>
                   ? widget.provider.getSearchedFoodList.length
                   : widget.provider.getFoodList.length,
               itemBuilder: (BuildContext context, int index) {
+                // Here an extra layer of checking takes place
+                // as the list only returns items marked as "salad" in
+                // their "type" data.
                 return widget.provider.isSearching
                     ? widget.provider.getSearchedFoodList[index].type == "salad"
                         ? FoodTile(

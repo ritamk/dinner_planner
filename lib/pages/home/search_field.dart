@@ -1,8 +1,8 @@
 import 'package:dinner_planner/services/food_list_provider.dart';
-import 'package:dinner_planner/shared/debouncer.dart';
 import 'package:dinner_planner/shared/loading.dart';
 import 'package:flutter/material.dart';
 
+/// Search widget that helps to search _food list's "name" property.
 class SearchField extends StatefulWidget {
   const SearchField({Key? key, required this.foodListProvider})
       : super(key: key);

@@ -22,12 +22,12 @@ class FoodListProvider with ChangeNotifier {
   void openClose() {
     _isOpen = !_isOpen;
     notifyListeners();
+    if (fullFood.isEmpty) {
+      DatabaseService().fullFoodList.then((value) => fullFood = value);
+    }
   }
 
-  void searchFood(String word) async {
-    if (fullFood.isEmpty) {
-      await DatabaseService().fullFoodList.then((value) => fullFood = value);
-    }
+  void searchFood(String word) {
     _searchedFood = fullFood;
     _searchedFood
         .retainWhere((element) => element.name.toLowerCase().contains(word));

@@ -4,15 +4,12 @@ import 'package:dinner_planner/shared/loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+/// Category containing only food items marked as "starter" under "type" data.
 class StarterFoodList extends StatefulWidget {
   const StarterFoodList(
-      {Key? key,
-      required this.loggedIn,
-      required this.height,
-      required this.provider})
+      {Key? key, required this.loggedIn, required this.provider})
       : super(key: key);
   final bool loggedIn;
-  final double height;
   final FoodListProvider provider;
 
   @override
